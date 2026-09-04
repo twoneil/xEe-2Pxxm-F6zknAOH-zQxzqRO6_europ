@@ -713,7 +713,8 @@ const defaultData = {
     { id:'t5',  mode:"Overnight bus",     from:"Istanbul",   to:"Bucharest",      date:"2026-09-23", detail:"Night of Sep 23", stationAddress:"Esenler Otogar (Istanbul International Bus Terminal), Bayrampaşa, Istanbul, Turkey" },
     { id:'t6',  mode:"Overnight bus",     from:"Bucharest",  to:"Sofia",          date:"2026-09-26", detail:"Night of Sep 26 · arrive Sep 27 AM", stationAddress:"Bucharest coach terminal — confirm the exact pickup point with your bus operator" },
     { id:'t7',  mode:"Daytime bus",       from:"Sofia",      to:"Skopje",         date:"2026-09-29", detail:"~5 hrs", stationAddress:"Sofia Central Bus Station, Knyaginya Maria Luiza Blvd 100, Sofia, Bulgaria" },
-    { id:'t8',  mode:"Daytime bus",       from:"Skopje",     to:"Tirana",         date:"2026-10-01", detail:"", stationAddress:"Skopje Bus Station (Avtobuska Stanica), near Nikola Karev St, Skopje, North Macedonia" },
+    { id:'t8',  mode:"Daytime bus",       from:"Skopje",     to:"Pristina",       date:"2026-10-01", detail:"~1.5–2 hrs", stationAddress:"Skopje Bus Station (Avtobuska Stanica), near Nikola Karev St, Skopje, North Macedonia" },
+    { id:'t8b', mode:"Daytime bus",       from:"Pristina",   to:"Tirana",         date:"2026-10-01", detail:"~3–3.5 hrs", stationAddress:"Pristina Central Bus Station (Stacioni i Autobusëve), Prishtina, Kosovo — confirm the exact bay with the ticket office" },
     { id:'t9',  mode:"Daytime bus",       from:"Tirana",     to:"Podgorica",      date:"2026-10-06", detail:"", stationAddress:"Tirana — intercity coaches depart from various points; confirm pickup with your operator" },
     { id:'t10', mode:"Daytime bus",       from:"Podgorica",  to:"Kotor",          date:"2026-10-07", detail:"", stationAddress:"Podgorica Bus & Train Station, next to Hotel Evropa, Podgorica, Montenegro" },
     { id:'t11', mode:"Daytime bus",       from:"Kotor",      to:"Dubrovnik",      date:"2026-10-08", detail:"", stationAddress:"Kotor bus stop, just outside the Old Town walls on the main coastal road" },
@@ -723,24 +724,27 @@ const defaultData = {
     { id:'t15', mode:"Overnight bus",     from:"Ljubljana",  to:"Budapest",       date:"2026-10-15", detail:"Night of Oct 15 · arrive Oct 16 AM", stationAddress:"Ljubljana Bus Station, Trg Osvobodilne fronte 4, Ljubljana, Slovenia" },
     { id:'t16', mode:"Daytime bus",       from:"Budapest",   to:"Košice",         date:"2026-10-18", detail:"", stationAddress:"Népliget Bus Station, Üllői út 131, Budapest, Hungary" },
     { id:'t17', mode:"Daytime bus",       from:"Košice",     to:"Wrocław",        date:"2026-10-19", detail:"", stationAddress:"Košice Bus Station, Staničné námestie 9, Košice, Slovakia" },
-    { id:'t18', mode:"Daytime bus",       from:"Wrocław",    to:"Warsaw",         date:"2026-10-20", detail:"", stationAddress:"Wrocław Bus Station (Dworzec Autobusowy), ul. Sucha 1B, Wrocław, Poland" }
+    { id:'t18', mode:"Train",             from:"Wrocław",    to:"Kraków",         date:"2026-10-20", detail:"~3 hrs, early departure for Auschwitz-Birkenau", stationAddress:"Wrocław Główny railway station, ul. Piłsudskiego 105, Wrocław, Poland" },
+    { id:'t18b',mode:"Train",             from:"Kraków",     to:"Warsaw",         date:"2026-10-20", detail:"~2h15–2h30, evening Express InterCity Premium", stationAddress:"Kraków Główny railway station, Plac Jana Nowaka-Jeziorańskiego 3, Kraków, Poland" }
   ],
 
   days: [
     { id:'d1', date:"2026-09-16", title:"Arrive in Istanbul", items:[
-      { time:"18:25", activity:"Land in Istanbul, transfer to Sultanahmet", note:"" },
-      { time:"19:30", activity:"Check in at Basileus Hotel", note:"" },
-      { time:"20:30", activity:"Sunset walk on Galata Bridge, watch the fishermen", note:"" },
-      { time:"21:30", activity:"Dinner near Galata, early night", note:"Jet lag — don't fight it" }
+      { time:"18:25", activity:"Land in Istanbul, clear immigration & baggage", note:"IST is a huge hub — give it time" },
+      { time:"19:15", activity:"Transfer to Sultanahmet", note:"Pre-book a transfer or budget extra for the M11+M2/Havaist" },
+      { time:"20:15", activity:"Check in at Basileus Hotel", note:"" },
+      { time:"21:00", activity:"Evening walk near Galata Bridge, watch the fishermen", note:"Sun will have already set by now — just an easy first stroll" },
+      { time:"21:45", activity:"Dinner near Galata, early night", note:"Jet lag — don't fight it" }
     ]},
     { id:'d2', date:"2026-09-17", title:"Istanbul — Sultanahmet & Bosphorus", items:[
+      { time:"07:00", activity:"Check out at Basileus Hotel (or store bags for the day)", note:"" },
       { time:"07:30", activity:"Blue Mosque", note:"Go early for fewer crowds" },
       { time:"08:30", activity:"Hagia Sophia", note:"" },
       { time:"09:30", activity:"Hippodrome of Constantinople", note:"" },
       { time:"10:00", activity:"Basilica Cistern", note:"" },
-      { time:"11:00", activity:"Topkapi Palace", note:"$12 entry" },
-      { time:"13:00", activity:"Lunch, then Grand Bazaar", note:"" },
-      { time:"14:30", activity:"Spice (Egyptian) Bazaar", note:"" },
+      { time:"11:00", activity:"Lunch in Sultanahmet", note:"" },
+      { time:"12:30", activity:"Grand Bazaar", note:"" },
+      { time:"14:00", activity:"Spice (Egyptian) Bazaar", note:"" },
       { time:"18:00", activity:"Galata Tower + meze dinner", note:"$6 entry, ~$25 dinner" },
       { time:"20:00", activity:"Tünel funicular → İstiklal Street → Taksim Square", note:"Overnight bus to Denizli tonight — keep a day bag handy" }
     ]},
@@ -748,7 +752,10 @@ const defaultData = {
       { time:"09:00", activity:"Minibus (dolmuş) from Denizli to Pamukkale Village", note:"~20 min" },
       { time:"09:30", activity:"Hierapolis ruins — theatre, necropolis, Martyrium of St. Philip", note:"" },
       { time:"11:00", activity:"Swim in the Cleopatra Antique Pool", note:"" },
-      { time:"15:00", activity:"Pamukkale travertines", note:"30 EUR entry, park closes 9pm — better light late afternoon" }
+      { time:"15:00", activity:"Pamukkale travertines", note:"30 EUR entry, park closes 9pm — better light late afternoon" },
+      { time:"18:00", activity:"Minibus back to Denizli", note:"" },
+      { time:"19:00", activity:"Dinner: try Denizli tavuk çevirme", note:"Rotisserie chicken — cheap, iconic local specialty, a must" },
+      { time:"21:00", activity:"Head to Denizli Otogar", note:"Overnight sleeper to Konya departs tonight" }
     ]},
     { id:'d4', date:"2026-09-19", title:"Konya", items:[
       { time:"09:00", activity:"Mevlana Museum — Rumi's tomb", note:"" },
@@ -760,6 +767,7 @@ const defaultData = {
     ]},
     { id:'d5', date:"2026-09-20", title:"Konya → Cappadocia", items:[
       { time:"09:00", activity:"Şems-i Tebrizi Tomb, quick visit before the bus", note:"" },
+      { time:"10:45", activity:"Check out at Meva Otel Konya", note:"" },
       { time:"11:00", activity:"Daytime bus to Göreme", note:"~4 hrs" },
       { time:"15:30", activity:"Check in at Katapa Stone House", note:"" },
       { time:"17:00", activity:"Easy first evening — wander Avanos or Pigeon Valley", note:"" }
@@ -771,14 +779,19 @@ const defaultData = {
       { time:"15:00", activity:"Üçhisar Castle", note:"Best panoramic views" }
     ]},
     { id:'d7', date:"2026-09-22", title:"Cappadocia — Green Tour", items:[
+      { time:"08:30", activity:"Check out at Katapa Stone House (store bags for the day)", note:"" },
       { time:"09:00", activity:"Derinkuyu & Kaymaklı underground cities", note:"" },
       { time:"12:30", activity:"Ihlara Valley canyon hike", note:"" },
       { time:"14:30", activity:"Selime Monastery", note:"Overnight bus to Istanbul tonight" }
     ]},
     { id:'d8', date:"2026-09-23", title:"Istanbul (day use, no hotel)", items:[
-      { time:"09:00", activity:"Drop bags, breakfast in Karaköy", note:"" },
-      { time:"10:30", activity:"Ortaköy waterfront + kumpir lunch", note:"" },
-      { time:"13:00", activity:"Bosphorus ferry, Eminönü ↔ Üsküdar", note:"Overnight bus to Bucharest tonight" }
+      { time:"09:00", activity:"Drop bags at luggage storage, breakfast in Karaköy", note:"" },
+      { time:"10:00", activity:"Topkapi Palace", note:"$12 entry, ~2–3 hrs — moved here from Sep 17 to spread the sightseeing out" },
+      { time:"13:00", activity:"Lunch, Ortaköy waterfront + kumpir", note:"" },
+      { time:"15:00", activity:"Bosphorus ferry, Eminönü ↔ Üsküdar", note:"" },
+      { time:"17:00", activity:"Free time — Dolmabahçe Palace grounds or just rest near Karaköy", note:"" },
+      { time:"19:00", activity:"Dinner near Karaköy", note:"" },
+      { time:"21:00", activity:"Head to Esenler Otogar", note:"Overnight bus to Bucharest tonight" }
     ]},
     { id:'d9', date:"2026-09-24", title:"Bucharest", items:[
       { time:"10:00", activity:"Palace of Parliament tour", note:"Book ahead" },
@@ -794,8 +807,14 @@ const defaultData = {
       { time:"15:00", activity:"Brașov old town", note:"" }
     ]},
     { id:'d11', date:"2026-09-26", title:"Bucharest → overnight bus", items:[
+      { time:"09:45", activity:"Check out at Duke Armeneasca Suites (store bags)", note:"" },
       { time:"10:00", activity:"Cișmigiu Garden, easy morning", note:"" },
-      { time:"12:00", activity:"The Choral Temple + Macca-Vilacrosse Passage", note:"Overnight bus to Sofia tonight" }
+      { time:"11:30", activity:"Revolution Square & Memorial of Rebirth", note:"" },
+      { time:"12:30", activity:"Lunch nearby", note:"" },
+      { time:"14:00", activity:"The Choral Temple + Macca-Vilacrosse Passage", note:"" },
+      { time:"16:00", activity:"Free afternoon — rest and repack for the overnight bus", note:"" },
+      { time:"18:30", activity:"Dinner near the Old Town", note:"" },
+      { time:"20:30", activity:"Head to the bus terminal", note:"Overnight bus to Sofia departs tonight" }
     ]},
     { id:'d12', date:"2026-09-27", title:"Sofia", items:[
       { time:"10:00", activity:"Check in at Best Western Terminus", note:"" },
@@ -808,6 +827,7 @@ const defaultData = {
       { time:"14:00", activity:"Boyana Church", note:"UNESCO frescoes" }
     ]},
     { id:'d14', date:"2026-09-29", title:"Sofia → Skopje", items:[
+      { time:"09:30", activity:"Check out at Best Western Terminus", note:"" },
       { time:"10:00", activity:"Daytime bus to Skopje", note:"~5 hrs" },
       { time:"16:00", activity:"Check in at Apart Hotel Solaris", note:"" },
       { time:"17:30", activity:"Old Bazaar + Stone Bridge sunset walk", note:"" }
@@ -815,18 +835,28 @@ const defaultData = {
     { id:'d15', date:"2026-09-30", title:"Matka Canyon day trip", items:[
       { time:"09:00", activity:"Matka Canyon boat ride + cave visit", note:"~25 EUR" },
       { time:"13:00", activity:"Millennium Cross cable car", note:"" },
-      { time:"16:00", activity:"Macedonia Square + Skopje Fortress", note:"" }
+      { time:"16:00", activity:"Macedonia Square + Skopje Fortress", note:"" },
+      { time:"17:00", activity:"Memorial House of Mother Teresa", note:"Quick visit, ~20 min" }
     ]},
-    { id:'d16', date:"2026-10-01", title:"Skopje → Tirana", items:[
-      { time:"09:00", activity:"Daytime bus to Tirana", note:"" },
-      { time:"17:00", activity:"Check in at Hotel Baron", note:"" },
-      { time:"19:00", activity:"Dinner at Oda Restaurant", note:"A must" }
+    { id:'d16', date:"2026-10-01", title:"Skopje → Pristina → Tirana", items:[
+      { time:"07:30", activity:"Check out at Apart Hotel Solaris", note:"" },
+      { time:"08:00", activity:"Daytime bus to Pristina", note:"~1.5–2 hrs" },
+      { time:"10:00", activity:"National Library of Kosovo", note:"Distinctive architecture, photo stop" },
+      { time:"10:45", activity:"Statue of Mother Teresa", note:"" },
+      { time:"11:15", activity:"Çarshia Mosque & Fatih Mosque, short city walk", note:"" },
+      { time:"12:30", activity:"Lunch in Pristina", note:"" },
+      { time:"14:00", activity:"Bus to Tirana", note:"~3–3.5 hrs" },
+      { time:"17:30", activity:"Check in at Hotel Baron", note:"" },
+      { time:"19:30", activity:"Dinner at Oda Restaurant", note:"A must" }
     ]},
     { id:'d17', date:"2026-10-02", title:"Tirana", items:[
       { time:"09:00", activity:"Skanderbeg Square + National History Museum", note:"" },
       { time:"11:00", activity:"Bunk'Art 1", note:"Taxi, outside center" },
-      { time:"14:00", activity:"Pyramid of Tirana + Et'hem Bey Mosque", note:"" },
-      { time:"16:00", activity:"Blloku area cafés", note:"" }
+      { time:"12:15", activity:"Travel to Durrës", note:"~40 min" },
+      { time:"13:00", activity:"Durrës visit", note:"4/33-N19 Durrës, Skënderbeu St. — Roman Amphitheatre & seafront, ~2 hrs" },
+      { time:"15:00", activity:"Return to Tirana", note:"~40 min" },
+      { time:"16:00", activity:"Pyramid of Tirana + Et'hem Bey Mosque", note:"" },
+      { time:"17:30", activity:"Blloku area cafés", note:"" }
     ]},
     { id:'d18', date:"2026-10-03", title:"Berat day trip", items:[
       { time:"08:00", activity:"Day trip to Berat — \"City of a Thousand Windows\"", note:"" },
@@ -834,21 +864,29 @@ const defaultData = {
       { time:"13:00", activity:"Lunch at Home-made Lili", note:"" }
     ]},
     { id:'d19', date:"2026-10-04", title:"Komani Lake day trip", items:[
-      { time:"07:00", activity:"Guided tour departs", note:"Mickey Tours / Komani Lake Ferry" },
-      { time:"09:00", activity:"Scenic ferry through the canyon", note:"" }
+      { time:"07:00", activity:"Bus departs Tirana for the Komani ferry dock", note:"~1.5–2 hrs" },
+      { time:"09:00", activity:"Scenic ferry through the Komani Lake canyon", note:"~2.5–3 hrs" },
+      { time:"12:30", activity:"Lunch near Fierzë", note:"" },
+      { time:"14:00", activity:"Return ferry + bus back to Tirana", note:"~3.5–4 hrs total return" },
+      { time:"18:30", activity:"Arrive back in Tirana, free evening", note:"" }
     ]},
-    { id:'d20', date:"2026-10-05", title:"Himara beach-hopping day trip", items:[
-      { time:"07:00", activity:"Guided coastal tour departs", note:"Fotis Tour Company" },
-      { time:"10:00", activity:"Gjipe Beach", note:"" },
-      { time:"14:00", activity:"Himara beaches", note:"" }
+    { id:'d20', date:"2026-10-05", title:"Gjirokastër day trip", items:[
+      { time:"06:30", activity:"Direct bus from Tirana to Gjirokastër", note:"~4 hrs — long day, no private driving, scheduled bus only" },
+      { time:"10:30", activity:"Gjirokastër Castle", note:"UNESCO \"City of Stone\"" },
+      { time:"12:00", activity:"Old Bazaar & Ottoman stone houses, lunch", note:"" },
+      { time:"14:00", activity:"Ethnographic Museum or free wander", note:"" },
+      { time:"15:30", activity:"Direct bus back to Tirana", note:"~4 hrs" },
+      { time:"19:30", activity:"Arrive back in Tirana, dinner", note:"" }
     ]},
     { id:'d21', date:"2026-10-06", title:"Tirana → Podgorica", items:[
       { time:"09:00", activity:"Dajti Ekspres cable car", note:"Closed Tuesdays — double check" },
+      { time:"10:45", activity:"Check out at Hotel Baron", note:"" },
       { time:"11:00", activity:"New Bazaar, last look at Tirana", note:"" },
       { time:"13:00", activity:"Daytime bus to Podgorica", note:"" },
       { time:"18:00", activity:"Check in at Hotel Evropa", note:"" }
     ]},
     { id:'d22', date:"2026-10-07", title:"Podgorica → Kotor", items:[
+      { time:"07:30", activity:"Check out at Hotel Evropa", note:"" },
       { time:"08:00", activity:"Bus to Virpazar for Lake Skadar National Park", note:"" },
       { time:"09:00", activity:"Lake Skadar boat option + Besac Castle ruins", note:"" },
       { time:"13:00", activity:"Daytime bus to Kotor", note:"" },
@@ -856,9 +894,11 @@ const defaultData = {
     ]},
     { id:'d23', date:"2026-10-08", title:"Kotor → Dubrovnik", items:[
       { time:"07:00", activity:"Kotor City Walls hike", note:"Before the heat" },
-      { time:"10:00", activity:"Cathedral of Saint Tryphon", note:"" },
-      { time:"11:30", activity:"Blue Cave boat tour", note:"Sea Stars" },
-      { time:"14:00", activity:"Daytime bus to Dubrovnik", note:"" },
+      { time:"09:00", activity:"Check out at D & Sons Apartments", note:"" },
+      { time:"09:30", activity:"Cathedral of Saint Tryphon", note:"" },
+      { time:"10:15", activity:"Free time — Sea Gate & Kampana Tower, coffee in the Old Town", note:"" },
+      { time:"12:00", activity:"Lunch", note:"" },
+      { time:"13:30", activity:"Daytime bus to Dubrovnik", note:"" },
       { time:"18:00", activity:"Check in at Guest House Bradas", note:"" }
     ]},
     { id:'d24', date:"2026-10-09", title:"Dubrovnik", items:[
@@ -868,13 +908,16 @@ const defaultData = {
       { time:"19:00", activity:"Stradun evening stroll", note:"" }
     ]},
     { id:'d25', date:"2026-10-10", title:"Dubrovnik → Split", items:[
+      { time:"08:30", activity:"Check out at Guest House Bradas", note:"" },
       { time:"09:00", activity:"Lokrum Island ferry + Benedictine Monastery", note:"" },
       { time:"13:00", activity:"Daytime bus to Split", note:"" },
       { time:"18:00", activity:"Check in at Luxury Rooms Fetivi, Riva waterfront walk", note:"" }
     ]},
     { id:'d26', date:"2026-10-11", title:"Split → Zadar → Zagreb", items:[
       { time:"08:00", activity:"Diocletian's Palace & cellars", note:"" },
+      { time:"09:15", activity:"Statue of Gregory of Nin", note:"Rub the toe for luck — right by the Golden Gate" },
       { time:"09:30", activity:"Climb the Cathedral of Saint Domnius bell tower", note:"" },
+      { time:"10:45", activity:"Check out at Luxury Rooms Fetivi", note:"" },
       { time:"11:00", activity:"Daytime bus toward Zadar", note:"" },
       { time:"13:00", activity:"Quick stop in Zadar old town", note:"" },
       { time:"15:00", activity:"Continue on to Zagreb", note:"" },
@@ -892,20 +935,27 @@ const defaultData = {
       { time:"09:00", activity:"Program C route — lower + upper lakes, boat, panoramic train", note:"4–6 hrs" }
     ]},
     { id:'d29', date:"2026-10-14", title:"Zagreb → Ljubljana", items:[
-      { time:"10:00", activity:"Free morning in Zagreb", note:"" },
+      { time:"10:00", activity:"Free morning in Zagreb — Tkalčićeva Street or coffee", note:"" },
+      { time:"11:00", activity:"Check out at HI Hostel Zagreb", note:"" },
       { time:"13:00", activity:"Daytime bus to Ljubljana", note:"" },
       { time:"17:00", activity:"Check in at Hostel Most, Old Town walk", note:"" },
       { time:"19:00", activity:"Prešeren Square & Triple Bridge", note:"" }
     ]},
     { id:'d30', date:"2026-10-15", title:"Ljubljana & Lake Bled", items:[
+      { time:"08:30", activity:"Check out at Hostel Most (luggage storage available)", note:"" },
       { time:"09:00", activity:"Ljubljana Castle + Central Market", note:"" },
-      { time:"12:00", activity:"Bus to Lake Bled", note:"~1.5 hrs" },
-      { time:"13:00", activity:"Bled Castle + boat to Bled Island", note:"Overnight bus to Budapest tonight" }
+      { time:"11:30", activity:"Bus to Lake Bled", note:"~1.5 hrs" },
+      { time:"13:00", activity:"Bled Castle + boat to Bled Island", note:"" },
+      { time:"16:30", activity:"Bus back to Ljubljana", note:"~1.5 hrs" },
+      { time:"18:00", activity:"Dinner in Ljubljana, relax before the overnight bus", note:"" },
+      { time:"21:00", activity:"Head to Ljubljana Bus Station", note:"Overnight bus to Budapest departs tonight" }
     ]},
     { id:'d31', date:"2026-10-16", title:"Budapest", items:[
       { time:"10:00", activity:"Check in at Omega Guesthouse", note:"" },
       { time:"11:00", activity:"St. Stephen's Basilica", note:"" },
       { time:"13:00", activity:"Central Market Hall", note:"" },
+      { time:"15:30", activity:"Shoes on the Danube Bank", note:"Quick, moving memorial along the river walk" },
+      { time:"16:00", activity:"Hungarian Parliament", note:"Riverside viewpoint — book an interior tour ahead if you want to go inside" },
       { time:"18:00", activity:"Fisherman's Bastion + Chain Bridge at sunset", note:"" }
     ]},
     { id:'d32', date:"2026-10-17", title:"Budapest", items:[
@@ -915,6 +965,7 @@ const defaultData = {
       { time:"19:30", activity:"Danube sunset boat cruise", note:"~$26" }
     ]},
     { id:'d33', date:"2026-10-18", title:"Budapest → Košice", items:[
+      { time:"09:30", activity:"Check out at Omega Guesthouse", note:"" },
       { time:"10:00", activity:"Daytime bus to Košice", note:"" },
       { time:"17:00", activity:"Check in at Penzión Sport", note:"" },
       { time:"18:00", activity:"Hlavná Street walk, dinner", note:"" }
@@ -922,21 +973,28 @@ const defaultData = {
     { id:'d34', date:"2026-10-19", title:"Košice → Wrocław", items:[
       { time:"09:00", activity:"St. Elizabeth Cathedral tower climb", note:"" },
       { time:"10:30", activity:"East Slovak Museum — Golden Treasure collection", note:"" },
+      { time:"12:45", activity:"Check out at Penzión Sport", note:"" },
       { time:"13:00", activity:"Daytime bus to Wrocław", note:"" },
       { time:"19:00", activity:"Check in at Hotel Piast, old town evening walk", note:"" }
     ]},
-    { id:'d35', date:"2026-10-20", title:"Wrocław → Warsaw", items:[
-      { time:"09:00", activity:"Wrocław market square, morning walk", note:"" },
-      { time:"12:00", activity:"Daytime bus to Warsaw", note:"" },
-      { time:"18:00", activity:"Check in at Level Rooms", note:"" },
-      { time:"19:30", activity:"First look at Warsaw Old Town", note:"" }
+    { id:'d35', date:"2026-10-20", title:"Wrocław → Kraków (Auschwitz-Birkenau) → Warsaw", items:[
+      { time:"06:00", activity:"Check out at Hotel Piast, early train to Kraków", note:"~3 hrs — book Auschwitz timed-entry tickets weeks ahead" },
+      { time:"09:00", activity:"Arrive Kraków, transfer to Auschwitz-Birkenau", note:"Guided minibus/tour, ~1.5 hrs" },
+      { time:"10:30", activity:"Auschwitz-Birkenau Memorial & Museum", note:"" },
+      { time:"14:00", activity:"Return to Kraków", note:"~1.5 hrs" },
+      { time:"15:30", activity:"Kraków Old Town walk", note:"Main Square, St. Mary's Basilica, Wawel Castle exterior" },
+      { time:"18:00", activity:"Evening train Kraków → Warsaw", note:"~2h15–2h30, Express InterCity Premium" },
+      { time:"20:30", activity:"Arrive Warsaw, check in at Level Rooms", note:"Long day — this is the one 14+ hour day of the trip" }
     ]},
     { id:'d36', date:"2026-10-21", title:"Warsaw", items:[
-      { time:"09:00", activity:"Warsaw Old Town, full walk", note:"" },
-      { time:"13:00", activity:"Optional: Gdańsk & Sopot day trip by train", note:"Full day, only if energy allows" }
+      { time:"09:00", activity:"Warsaw Old Town Square + Royal Castle", note:"" },
+      { time:"13:00", activity:"Lunch in the Old Town", note:"" },
+      { time:"14:30", activity:"Łazienki Park", note:"Palace on the Water, Chopin Monument" },
+      { time:"17:00", activity:"Warsaw Uprising Museum", note:"Or POLIN Museum of the History of Polish Jews, if you'd rather" },
+      { time:"19:30", activity:"Dinner, free evening", note:"" }
     ]},
     { id:'d37', date:"2026-10-22", title:"Fly home", items:[
-      { time:"08:00", activity:"Check out, head to WAW", note:"" },
+      { time:"08:00", activity:"Check out at Level Rooms, head to WAW", note:"" },
       { time:"11:50", activity:"Flight WAW → YUL departs", note:"" },
       { time:"20:15", activity:"Arrive home in Montreal", note:"" }
     ]}
@@ -968,13 +1026,14 @@ const FLAG_MAP = {
   "Bucharest":"🇷🇴", "Brașov":"🇷🇴", "Bran":"🇷🇴", "Peleș":"🇷🇴",
   "Sofia":"🇧🇬", "Rila":"🇧🇬", "Boyana":"🇧🇬",
   "Skopje":"🇲🇰", "Matka":"🇲🇰",
-  "Tirana":"🇦🇱", "Berat":"🇦🇱", "Komani":"🇦🇱", "Himara":"🇦🇱",
+  "Pristina":"🇽🇰",
+  "Tirana":"🇦🇱", "Berat":"🇦🇱", "Komani":"🇦🇱", "Gjirokastër":"🇦🇱", "Durrës":"🇦🇱",
   "Podgorica":"🇲🇪", "Kotor":"🇲🇪", "Skadar":"🇲🇪",
   "Dubrovnik":"🇭🇷", "Split":"🇭🇷", "Zadar":"🇭🇷", "Zagreb":"🇭🇷", "Plitvice":"🇭🇷",
   "Ljubljana":"🇸🇮", "Bled":"🇸🇮",
   "Budapest":"🇭🇺",
   "Košice":"🇸🇰",
-  "Wrocław":"🇵🇱", "Warsaw":"🇵🇱", "WAW":"🇵🇱"
+  "Kraków":"🇵🇱", "Auschwitz":"🇵🇱", "Wrocław":"🇵🇱", "Warsaw":"🇵🇱", "WAW":"🇵🇱"
 };
 function cityFlag(text){
   if(!text) return "📍";
