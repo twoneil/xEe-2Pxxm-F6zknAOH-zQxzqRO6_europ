@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Travel Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Inter:wght@500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B0F2B;
+    --ink-2:#171C46;
+    --paper:#F4F5FB;
+    --paper-2:#E9EAF6;
+    --blue:#2F6FED;
+    --blue-deep:#1E4FC4;
+    --green:#00B37A;
+    --green-deep:#009166;
+    --orange:#FF6A00;
+    --orange-deep:#DB5800;
+    --purple:#7C3AED;
+    --purple-deep:#6425D0;
+    --pink:#FF3D81;
+    --yellow:#FFC700;
+    --red:#E1332C;
+    --text:#0B0F2B;
+    --muted:#565B78;
+    --line:#D6D8EC;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--text);
+    font-family:'Inter', -apple-system, sans-serif;
+    font-weight:600;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:60px;
+    font-size:16.5px;
+  }
+  ::selection{background:var(--yellow); color:var(--ink);}
+
+  /* ---------- Header ---------- */
+  header{
+    background:var(--ink);
+    color:var(--white);
+    padding:30px 20px 24px;
+    position:relative;
+    overflow:hidden;
+  }
+  header::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:0;
+    height:7px;
+    background:repeating-linear-gradient(90deg,
+      var(--blue) 0 18px, var(--orange) 18px 36px,
+      var(--green) 36px 54px, var(--pink) 54px 72px,
+      var(--purple) 72px 90px, var(--yellow) 90px 108px);
+  }
+  .trip-title{
+    font-family:'Outfit', sans-serif;
+    font-size:clamp(30px, 8vw, 44px);
+    font-weight:900;
+    margin:0;
+    line-height:1.02;
+    letter-spacing:-0.02em;
+  }
+  .trip-sub{
+    margin-top:8px;
+    color:#C7CBEF;
+    font-size:15.5px;
+    font-weight:700;
+  }
+
+  /* ---------- Tabs ---------- */
+  nav.tabs{
+    display:flex;
+    background:var(--ink-2);
+    overflow-x:auto;
+    scrollbar-width:none;
+    border-bottom:3px solid var(--ink);
+  }
+  nav.tabs::-webkit-scrollbar{display:none;}
+  nav.tabs button{
+    flex:0 0 auto;
+    background:none;
+    border:none;
+    color:#AEB3DC;
+    font-family:'Outfit',sans-serif;
+    font-size:15px;
+    font-weight:700;
+    padding:14px 17px;
+    cursor:pointer;
+    border-bottom:4px solid transparent;
+    white-space:nowrap;
+  }
+  nav.tabs button.active{
+    color:var(--white);
+    border-bottom-color:var(--yellow);
+  }
+
+  main{max-width:640px; margin:0 auto; padding:20px 16px 0;}
+  .view{display:none;}
+  .view.active{display:block;}
+
+  /* ---------- Today board ---------- */
+  .board{
+    background:var(--ink);
+    color:var(--white);
+    border-radius:14px;
+    padding:22px 20px;
+    margin-bottom:22px;
+    box-shadow:0 10px 26px rgba(11,15,43,.28);
+    border:2px solid var(--ink-2);
+  }
+  .board-date{
+    font-size:13px;
+    letter-spacing:.03em;
+    color:#9CA3E0;
+    margin-bottom:14px;
+    font-weight:700;
+  }
+  .board-next-label{
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    color:var(--yellow);
+    font-weight:800;
+    margin-bottom:8px;
+  }
+  .board-next-title{
+    font-family:'Outfit', sans-serif;
+    font-size:25px;
+    font-weight:800;
+    line-height:1.2;
+    margin-bottom:12px;
+  }
+  .board-next-meta{
+    display:flex;
+    gap:24px;
+    flex-wrap:wrap;
+    font-family:'JetBrains Mono', monospace;
+  }
+  .board-metric .num{font-size:22px; font-weight:800; color:var(--white);}
+  .board-metric .lbl{font-size:11.5px; color:#9CA3E0; letter-spacing:.05em; font-weight:700;}
+  .board-empty{color:#C7CBEF; font-size:15px; padding:6px 0; font-weight:700;}
+
+  .board-today-list{
+    margin-top:18px;
+    padding-top:16px;
+    border-top:2px dashed #33396B;
+  }
+  .board-today-list h4{
+    margin:0 0 10px;
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    color:var(--yellow);
+    font-weight:800;
+  }
+  .board-row{
+    display:flex;
+    gap:12px;
+    padding:8px 0;
+    font-size:15.5px;
+    align-items:baseline;
+    font-weight:700;
+  }
+  .board-row .time{
+    font-family:'JetBrains Mono', monospace;
+    color:var(--orange);
+    font-weight:800;
+    min-width:62px;
+    flex-shrink:0;
+  }
+
+  /* ---------- Section headers ---------- */
+  h2.section-title{
+    font-family:'Outfit', sans-serif;
+    font-size:24px;
+    font-weight:800;
+    margin:4px 0 14px;
+  }
+
+  /* ---------- Ticket-style cards (flights/hotels) ---------- */
+  .ticket{
+    position:relative;
+    background:var(--white);
+    border:2px solid var(--line);
+    border-radius:12px;
+    margin-bottom:18px;
+    overflow:hidden;
+    box-shadow:0 3px 10px rgba(11,15,43,.06);
+  }
+  .flight-ticket{border-left:7px solid var(--blue);}
+  .hotel-ticket{border-left:7px solid var(--green);}
+  .ticket-main{padding:17px 18px 15px;}
+  .ticket-route{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:2px;
+    flex-wrap:wrap;
+  }
+  .ticket-city{
+    font-family:'Outfit', sans-serif;
+    font-size:22px;
+    font-weight:800;
+  }
+  .flight-ticket .ticket-arrow{color:var(--blue-deep); font-size:18px; font-weight:800;}
+  .ticket-times{
+    display:flex;
+    gap:28px;
+    margin-top:12px;
+    font-family:'JetBrains Mono', monospace;
+  }
+  .ticket-time .num{font-size:26px; font-weight:800; letter-spacing:-.01em;}
+  .ticket-time .lbl{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-top:2px; font-weight:700;}
+  .ticket-date{font-size:14px; color:var(--muted); margin-top:8px; font-weight:700;}
+
+  .ticket-perf{
+    border-top:2px dashed var(--line);
+    position:relative;
+  }
+  .ticket-perf::before, .ticket-perf::after{
+    content:"";
+    position:absolute; top:-9px;
+    width:18px; height:18px;
+    background:var(--paper);
+    border-radius:50%;
+  }
+  .ticket-perf::before{left:-9px;}
+  .ticket-perf::after{right:-9px;}
+
+  .ticket-foot{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 18px;
+    background:var(--paper-2);
+    font-size:13.5px;
+    color:var(--muted);
+    gap:10px;
+    font-weight:700;
+  }
+  .ticket-foot .paid{
+    font-weight:800;
+    color:var(--green-deep);
+    font-family:'JetBrains Mono', monospace;
+    text-align:right;
+    font-size:15px;
+  }
+  .ticket-code{letter-spacing:.03em;}
+
+  .hotel-name{
+    font-family:'Outfit', sans-serif;
+    font-size:21px;
+    font-weight:800;
+    margin-bottom:5px;
+  }
+  .hotel-addr{font-size:14px; color:var(--muted); margin-bottom:13px; font-weight:700;}
+  .hotel-stay{display:flex; gap:30px; font-family:'JetBrains Mono', monospace;}
+
+  /* ---------- Transit cards (buses) ---------- */
+  .transit-card{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--white);
+    border:2px solid var(--line);
+    border-left:7px solid var(--orange);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:13px;
+  }
+  .transit-icon{
+    font-size:22px;
+    flex-shrink:0;
+    width:34px; height:34px;
+    border-radius:50%;
+    background:#FFF0E3;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .transit-body{flex:1; min-width:0;}
+  .transit-mode{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--orange-deep);
+    font-weight:800;
+    margin-bottom:3px;
+  }
+  .transit-route{
+    font-family:'Outfit', serif;
+    font-size:18.5px;
+    font-weight:800;
+  }
+  .transit-meta{
+    font-size:13px;
+    color:var(--muted);
+    margin-top:3px;
+    font-weight:700;
+  }
+
+  .card-actions{
+    display:flex; gap:16px;
+    padding:0 18px 13px;
+  }
+  .card-actions button{
+    background:none; border:none; cursor:pointer;
+    font-size:13px; color:var(--muted);
+    text-decoration:underline;
+    padding:2px 0;
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+  }
+  .card-actions button:hover{color:var(--red);}
+  .transit-card .card-actions{padding:0; margin-left:8px; flex-shrink:0; flex-direction:column; gap:5px; text-align:right;}
+
+  /* ---------- Itinerary ---------- */
+  .day-card{
+    background:var(--white);
+    border:2px solid var(--line);
+    border-left:7px solid var(--purple);
+    border-radius:12px;
+    margin-bottom:16px;
+    padding:17px 18px;
+  }
+  .day-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:11px;
+  }
+  .day-date{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--purple-deep);
+    font-weight:800;
+    letter-spacing:.02em;
+  }
+  .day-title{
+    font-family:'Outfit', sans-serif;
+    font-size:20px;
+    font-weight:800;
+  }
+  .day-items{list-style:none; margin:0; padding:0;}
+  .day-item{
+    display:flex;
+    gap:12px;
+    padding:9px 0;
+    border-top:2px solid var(--paper-2);
+    font-size:15.5px;
+    font-weight:700;
+  }
+  .day-item:first-child{border-top:none;}
+  .day-item .time{
+    font-family:'JetBrains Mono', monospace;
+    color:var(--purple-deep);
+    min-width:56px;
+    flex-shrink:0;
+    font-weight:800;
+  }
+  .day-item .note{color:var(--muted); font-size:13.5px; margin-top:3px; font-weight:600;}
+  .day-actions{margin-top:11px; text-align:right;}
+  .day-actions button, .today-badge{
+    font-size:12px;
+  }
+
+  .today-badge{
+    display:inline-block;
+    background:var(--yellow);
+    color:var(--ink);
+    font-weight:800;
+    padding:3px 9px;
+    border-radius:20px;
+    margin-left:8px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+  }
+
+  /* ---------- Empty states ---------- */
+  .empty{
+    text-align:center;
+    padding:38px 20px;
+    color:var(--muted);
+    font-size:15.5px;
+    font-weight:700;
+  }
+
+  /* ---------- Add button ---------- */
+  .add-btn{
+    display:block;
+    width:100%;
+    background:var(--ink);
+    color:var(--white);
+    border:none;
+    border-radius:10px;
+    padding:15px;
+    font-size:15.5px;
+    font-weight:800;
+    cursor:pointer;
+    margin-bottom:24px;
+    font-family:'Outfit',sans-serif;
+  }
+  .add-btn:hover{background:var(--ink-2);}
+
+  /* ---------- Modal / form ---------- */
+  .overlay{
+    display:none;
+    position:fixed; inset:0;
+    background:rgba(11,15,43,.6);
+    z-index:50;
+    align-items:flex-end;
+    justify-content:center;
+  }
+  .overlay.active{display:flex;}
+  .sheet{
+    background:var(--paper);
+    width:100%;
+    max-width:640px;
+    max-height:88vh;
+    overflow-y:auto;
+    border-radius:18px 18px 0 0;
+    padding:24px 20px 28px;
+  }
+  .sheet h3{
+    font-family:'Outfit', sans-serif;
+    font-size:22px;
+    font-weight:800;
+    margin:0 0 16px;
+  }
+  .field{margin-bottom:14px;}
+  .field label{
+    display:block;
+    font-size:12.5px;
+    color:var(--muted);
+    margin-bottom:5px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+  }
+  .field input, .field textarea, .field select{
+    width:100%;
+    padding:11px 12px;
+    border:2px solid var(--line);
+    border-radius:8px;
+    font-size:15.5px;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    background:var(--white);
+    color:var(--text);
+  }
+  .field textarea{resize:vertical; min-height:70px;}
+  .field-row{display:flex; gap:10px;}
+  .field-row .field{flex:1;}
+  .sheet-actions{
+    display:flex;
+    gap:10px;
+    margin-top:18px;
+  }
+  .sheet-actions button{
+    flex:1;
+    padding:13px;
+    border-radius:9px;
+    border:none;
+    font-size:15.5px;
+    font-weight:800;
+    cursor:pointer;
+    font-family:'Outfit',sans-serif;
+  }
+  .btn-save{background:var(--ink); color:var(--white);}
+  .btn-cancel{background:var(--paper-2); color:var(--text);}
+
+  .day-items-editor{border-top:2px solid var(--line); margin-top:6px; padding-top:12px;}
+  .item-row{display:flex; gap:8px; margin-bottom:8px; align-items:flex-start;}
+  .item-row input{flex:1;}
+  .item-row input.time-input{max-width:100px; flex:none;}
+  .item-row .rm{
+    background:none; border:none; color:var(--red);
+    font-size:20px; cursor:pointer; padding:6px 4px; line-height:1; font-weight:800;
+  }
+  .add-item-btn{
+    background:none; border:2px dashed var(--line);
+    width:100%; padding:10px; border-radius:8px;
+    font-size:14px; color:var(--muted); cursor:pointer; margin-top:2px; font-weight:700;
+  }
+
+  /* ---------- Settings ---------- */
+  .settings-block{
+    background:var(--white);
+    border:2px solid var(--line);
+    border-radius:12px;
+    padding:19px;
+    margin-bottom:16px;
+  }
+  .settings-block h4{margin:0 0 9px; font-family:'Outfit',sans-serif; font-size:18px; font-weight:800;}
+  .settings-block p{margin:0 0 13px; font-size:14px; color:var(--muted); line-height:1.5; font-weight:600;}
+  .settings-row{display:flex; gap:10px;}
+  .settings-row button{
+    flex:1;
+    padding:12px;
+    border-radius:8px;
+    border:2px solid var(--line);
+    background:var(--paper-2);
+    font-size:14px;
+    font-weight:800;
+    cursor:pointer;
+    color:var(--text);
+  }
+  .settings-row button.danger{color:var(--red); border-color:#F3C3C0;}
+  input[type="file"]{display:none;}
+
+  @media (max-width:400px){
+    .ticket-times, .hotel-stay{gap:20px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1 class="trip-title" id="tripTitleDisplay">My Trip</h1>
+  <div class="trip-sub" id="tripSubDisplay">Tap Settings to name your trip</div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-view="today">Today</button>
+  <button class="tab-btn" data-view="flights">Flights</button>
+  <button class="tab-btn" data-view="hotels">Hotels</button>
+  <button class="tab-btn" data-view="transit">Transit</button>
+  <button class="tab-btn" data-view="itinerary">Itinerary</button>
+  <button class="tab-btn" data-view="settings">Settings</button>
+</nav>
+
+<main>
+
+  <!-- TODAY -->
+  <section class="view active" id="view-today">
+    <div class="board" id="board"></div>
+    <div id="todayItinerary"></div>
+  </section>
+
+  <!-- FLIGHTS -->
+  <section class="view" id="view-flights">
+    <h2 class="section-title">✈️ Flights</h2>
+    <button class="add-btn" onclick="openFlightForm()">+ Add flight</button>
+    <div id="flightsList"></div>
+  </section>
+
+  <!-- HOTELS -->
+  <section class="view" id="view-hotels">
+    <h2 class="section-title">🏨 Hotels</h2>
+    <button class="add-btn" onclick="openHotelForm()">+ Add hotel</button>
+    <div id="hotelsList"></div>
+  </section>
+
+  <!-- TRANSIT -->
+  <section class="view" id="view-transit">
+    <h2 class="section-title">🚌 Transit</h2>
+    <button class="add-btn" onclick="openTransitForm()">+ Add bus / transit leg</button>
+    <div id="transitList"></div>
+  </section>
+
+  <!-- ITINERARY -->
+  <section class="view" id="view-itinerary">
+    <h2 class="section-title">🗺️ Itinerary</h2>
+    <button class="add-btn" onclick="openDayForm()">+ Add day</button>
+    <div id="itineraryList"></div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section class="view" id="view-settings">
+    <h2 class="section-title">⚙️ Settings</h2>
+
+    <div class="settings-block">
+      <h4>Trip name</h4>
+      <div class="field">
+        <input type="text" id="settingsTripName" placeholder="e.g. Eastern Europe 2026">
+      </div>
+      <div class="field">
+        <input type="text" id="settingsTripSub" placeholder="e.g. Montreal → Istanbul → Warsaw">
+      </div>
+      <button class="add-btn" style="margin:6px 0 0;" onclick="saveTripInfo()">Save trip name</button>
+    </div>
+
+    <div class="settings-block">
+      <h4>Your data</h4>
+      <p>Everything you enter is saved in this browser only. Back it up or move it to your phone with export / import.</p>
+      <div class="settings-row">
+        <button onclick="exportData()">Export backup (.json)</button>
+        <button onclick="document.getElementById('importFile').click()">Import backup</button>
+      </div>
+      <input type="file" id="importFile" accept="application/json">
+    </div>
+
+    <div class="settings-block">
+      <h4>Reset</h4>
+      <p>Clears every flight, hotel, transit leg, and itinerary day. Export a backup first if you might want this data again.</p>
+      <div class="settings-row">
+        <button class="danger" onclick="clearAllData()">Clear all data</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay">
+  <div class="sheet" id="sheet"></div>
+</div>
+
+<script>
+/* ================= DATA ================= */
+const STORAGE_KEY = 'travelGuideData_v3';
+
+/* Your Europe overland trip — Montreal to Istanbul and back through the Balkans,
+   Adriatic coast, and Central Europe. Edit any of this from the app itself. */
+const defaultData = {
+  tripName: "Eastern Europe 2026",
+  tripSub: "Montreal → Istanbul → Warsaw · Sep 15 – Oct 22",
+
+  flights: [
+    { id:'f1', from:"YUL", to:"IST", date:"2026-09-15", depart:"22:00", arrive:"18:25", airline:"", confirmation:"", paid:"" },
+    { id:'f2', from:"WAW", to:"YUL", date:"2026-10-22", depart:"11:50", arrive:"20:15", airline:"", confirmation:"", paid:"" }
+  ],
+
+  hotels: [
+    { id:'h1',  name:"Basileus Hotel",          address:"Istanbul, Turkey",         checkIn:"2026-09-16", checkOut:"2026-09-17", confirmation:"", paid:"$77.91" },
+    { id:'h2',  name:"Meva Otel Konya",         address:"Konya, Turkey",            checkIn:"2026-09-19", checkOut:"2026-09-20", confirmation:"", paid:"$81.45" },
+    { id:'h3',  name:"Katapa Stone House",      address:"Göreme, Cappadocia, Turkey", checkIn:"2026-09-20", checkOut:"2026-09-22", confirmation:"", paid:"$188.52" },
+    { id:'h4',  name:"Duke Armeneasca Suites",  address:"Bucharest, Romania",       checkIn:"2026-09-24", checkOut:"2026-09-26", confirmation:"", paid:"$193.18 + $12.20 at property" },
+    { id:'h5',  name:"Best Western Terminus",   address:"Sofia, Bulgaria",          checkIn:"2026-09-27", checkOut:"2026-09-29", confirmation:"", paid:"$202.63 + $8.20 at property" },
+    { id:'h6',  name:"Apart Hotel Solaris",     address:"Skopje, North Macedonia",  checkIn:"2026-09-29", checkOut:"2026-10-01", confirmation:"", paid:"$114.48 + $4.23 at property" },
+    { id:'h7',  name:"Hotel Baron",             address:"Tirana, Albania",          checkIn:"2026-10-01", checkOut:"2026-10-06", confirmation:"", paid:"$324.42 + $24.38 at property" },
+    { id:'h8',  name:"Hotel Evropa",            address:"Podgorica, Montenegro",    checkIn:"2026-10-06", checkOut:"2026-10-07", confirmation:"", paid:"$129.75 + $3.21 at property" },
+    { id:'h9',  name:"D & Sons Apartments",     address:"Kotor, Montenegro",        checkIn:"2026-10-07", checkOut:"2026-10-08", confirmation:"", paid:"$125.47 + $3.21 at property" },
+    { id:'h10', name:"Guest House Bradas",      address:"Dubrovnik, Croatia",       checkIn:"2026-10-08", checkOut:"2026-10-10", confirmation:"", paid:"$190.08" },
+    { id:'h11', name:"Luxury Rooms Fetivi",     address:"Split, Croatia",           checkIn:"2026-10-10", checkOut:"2026-10-11", confirmation:"", paid:"$112.98 + $5.96 at property" },
+    { id:'h12', name:"HI Hostel Zagreb",        address:"Zagreb, Croatia",          checkIn:"2026-10-11", checkOut:"2026-10-14", confirmation:"", paid:"€171.45 — pay at property, nothing prepaid" },
+    { id:'h13', name:"Hostel Most",             address:"Ljubljana, Slovenia",      checkIn:"2026-10-14", checkOut:"2026-10-15", confirmation:"", paid:"$84.40 + $10.04 at property" },
+    { id:'h14', name:"Omega Guesthouse",        address:"Budapest, Hungary",        checkIn:"2026-10-16", checkOut:"2026-10-18", confirmation:"", paid:"$201.12 + $7.66 at property" },
+    { id:'h15', name:"Penzión Sport",           address:"Košice, Slovakia",         checkIn:"2026-10-18", checkOut:"2026-10-19", confirmation:"", paid:"$112.87 + $11.22 at property" },
+    { id:'h16', name:"Hotel Piast",             address:"Wrocław, Poland",          checkIn:"2026-10-19", checkOut:"2026-10-20", confirmation:"", paid:"$95.22" },
+    { id:'h17', name:"Level Rooms",             address:"Warsaw, Poland",           checkIn:"2026-10-20", checkOut:"2026-10-22", confirmation:"", paid:"$233.12" }
+  ],
+
+  transit: [
+    { id:'t1',  mode:"Overnight bus",     from:"Istanbul",   to:"Denizli",        date:"2026-09-17", detail:"Night of Sep 17" },
+    { id:'t2',  mode:"Overnight sleeper", from:"Denizli",    to:"Konya",          date:"2026-09-18", detail:"Night of Sep 18 · arrive Sep 19 AM" },
+    { id:'t3',  mode:"Daytime bus",       from:"Konya",      to:"Göreme",         date:"2026-09-20", detail:"~4 hrs" },
+    { id:'t4',  mode:"Overnight bus",     from:"Cappadocia", to:"Istanbul",       date:"2026-09-22", detail:"Night of Sep 22 · arrive Sep 23 AM" },
+    { id:'t5',  mode:"Overnight bus",     from:"Istanbul",   to:"Bucharest",      date:"2026-09-23", detail:"Night of Sep 23" },
+    { id:'t6',  mode:"Overnight bus",     from:"Bucharest",  to:"Sofia",          date:"2026-09-26", detail:"Night of Sep 26 · arrive Sep 27 AM" },
+    { id:'t7',  mode:"Daytime bus",       from:"Sofia",      to:"Skopje",         date:"2026-09-29", detail:"~5 hrs" },
+    { id:'t8',  mode:"Daytime bus",       from:"Skopje",     to:"Tirana",         date:"2026-10-01", detail:"" },
+    { id:'t9',  mode:"Daytime bus",       from:"Tirana",     to:"Podgorica",      date:"2026-10-06", detail:"" },
+    { id:'t10', mode:"Daytime bus",       from:"Podgorica",  to:"Kotor",          date:"2026-10-07", detail:"" },
+    { id:'t11', mode:"Daytime bus",       from:"Kotor",      to:"Dubrovnik",      date:"2026-10-08", detail:"" },
+    { id:'t12', mode:"Daytime bus",       from:"Dubrovnik",  to:"Split",          date:"2026-10-10", detail:"" },
+    { id:'t13', mode:"Daytime bus",       from:"Split",      to:"Zadar → Zagreb", date:"2026-10-11", detail:"Continue to Zagreb same day" },
+    { id:'t14', mode:"Daytime bus",       from:"Zagreb",     to:"Ljubljana",      date:"2026-10-14", detail:"" },
+    { id:'t15', mode:"Overnight bus",     from:"Ljubljana",  to:"Budapest",       date:"2026-10-15", detail:"Night of Oct 15 · arrive Oct 16 AM" },
+    { id:'t16', mode:"Daytime bus",       from:"Budapest",   to:"Košice",         date:"2026-10-18", detail:"" },
+    { id:'t17', mode:"Daytime bus",       from:"Košice",     to:"Wrocław",        date:"2026-10-19", detail:"" },
+    { id:'t18', mode:"Daytime bus",       from:"Wrocław",    to:"Warsaw",         date:"2026-10-20", detail:"" }
+  ],
+
+  days: [
+    { id:'d1', date:"2026-09-16", title:"Arrive in Istanbul", items:[
+      { time:"18:25", activity:"Land in Istanbul, transfer to Sultanahmet", note:"" },
+      { time:"19:30", activity:"Check in at Basileus Hotel", note:"" },
+      { time:"20:30", activity:"Sunset walk on Galata Bridge, watch the fishermen", note:"" },
+      { time:"21:30", activity:"Dinner near Galata, early night", note:"Jet lag — don't fight it" }
+    ]},
+    { id:'d2', date:"2026-09-17", title:"Istanbul — Sultanahmet & Bosphorus", items:[
+      { time:"07:30", activity:"Blue Mosque", note:"Go early for fewer crowds" },
+      { time:"08:30", activity:"Hagia Sophia", note:"" },
+      { time:"09:30", activity:"Hippodrome of Constantinople", note:"" },
+      { time:"10:00", activity:"Basilica Cistern", note:"" },
+      { time:"11:00", activity:"Topkapi Palace", note:"$12 entry" },
+      { time:"13:00", activity:"Lunch, then Grand Bazaar", note:"" },
+      { time:"14:30", activity:"Spice (Egyptian) Bazaar", note:"" },
+      { time:"18:00", activity:"Galata Tower + meze dinner", note:"$6 entry, ~$25 dinner" },
+      { time:"20:00", activity:"Tünel funicular → İstiklal Street → Taksim Square", note:"Overnight bus to Denizli tonight — keep a day bag handy" }
+    ]},
+    { id:'d3', date:"2026-09-18", title:"Pamukkale day trip", items:[
+      { time:"09:00", activity:"Minibus (dolmuş) from Denizli to Pamukkale Village", note:"~20 min" },
+      { time:"09:30", activity:"Hierapolis ruins — theatre, necropolis, Martyrium of St. Philip", note:"" },
+      { time:"11:00", activity:"Swim in the Cleopatra Antique Pool", note:"" },
+      { time:"15:00", activity:"Pamukkale travertines", note:"30 EUR entry, park closes 9pm — better light late afternoon" }
+    ]},
+    { id:'d4', date:"2026-09-19", title:"Konya", items:[
+      { time:"09:00", activity:"Mevlana Museum — Rumi's tomb", note:"" },
+      { time:"10:30", activity:"Selimiye Mosque", note:"" },
+      { time:"11:30", activity:"Alaeddin Hill & Mosque", note:"" },
+      { time:"13:00", activity:"Kadınlar Pazarı market + lunch", note:"" },
+      { time:"15:00", activity:"Karatay Medresesi tile museum", note:"" },
+      { time:"19:00", activity:"Whirling Dervishes Sema ceremony", note:"Mevlana Cultural Center" }
+    ]},
+    { id:'d5', date:"2026-09-20", title:"Konya → Cappadocia", items:[
+      { time:"09:00", activity:"Şems-i Tebrizi Tomb, quick visit before the bus", note:"" },
+      { time:"11:00", activity:"Daytime bus to Göreme", note:"~4 hrs" },
+      { time:"15:30", activity:"Check in at Katapa Stone House", note:"" },
+      { time:"17:00", activity:"Easy first evening — wander Avanos or Pigeon Valley", note:"" }
+    ]},
+    { id:'d6', date:"2026-09-21", title:"Cappadocia — balloon day", items:[
+      { time:"04:30", activity:"Hot air balloon sunrise flight", note:"Hotel pickup" },
+      { time:"09:00", activity:"Göreme Open Air Museum — rock-cut churches, frescoes", note:"" },
+      { time:"11:00", activity:"Love Valley hike", note:"" },
+      { time:"15:00", activity:"Üçhisar Castle", note:"Best panoramic views" }
+    ]},
+    { id:'d7', date:"2026-09-22", title:"Cappadocia — Green Tour", items:[
+      { time:"09:00", activity:"Derinkuyu & Kaymaklı underground cities", note:"" },
+      { time:"12:30", activity:"Ihlara Valley canyon hike", note:"" },
+      { time:"14:30", activity:"Selime Monastery", note:"Overnight bus to Istanbul tonight" }
+    ]},
+    { id:'d8', date:"2026-09-23", title:"Istanbul (day use, no hotel)", items:[
+      { time:"09:00", activity:"Drop bags, breakfast in Karaköy", note:"" },
+      { time:"10:30", activity:"Ortaköy waterfront + kumpir lunch", note:"" },
+      { time:"13:00", activity:"Bosphorus ferry, Eminönü ↔ Üsküdar", note:"Overnight bus to Bucharest tonight" }
+    ]},
+    { id:'d9', date:"2026-09-24", title:"Bucharest", items:[
+      { time:"10:00", activity:"Palace of Parliament tour", note:"Book ahead" },
+      { time:"13:00", activity:"Old Town / Calea Victoriei wander", note:"" },
+      { time:"15:00", activity:"Romanian Athenaeum", note:"" },
+      { time:"16:00", activity:"Stavropoleos Church + Cărturești Carusel bookstore", note:"" },
+      { time:"19:00", activity:"Piața Unirii fountain show", note:"" }
+    ]},
+    { id:'d10', date:"2026-09-25", title:"Bran, Peleș & Brașov day trip", items:[
+      { time:"07:00", activity:"Guided day trip departs Bucharest", note:"~$46" },
+      { time:"08:30", activity:"Bran Castle", note:"" },
+      { time:"12:00", activity:"Peleș Castle", note:"" },
+      { time:"15:00", activity:"Brașov old town", note:"" }
+    ]},
+    { id:'d11', date:"2026-09-26", title:"Bucharest → overnight bus", items:[
+      { time:"10:00", activity:"Cișmigiu Garden, easy morning", note:"" },
+      { time:"12:00", activity:"The Choral Temple + Macca-Vilacrosse Passage", note:"Overnight bus to Sofia tonight" }
+    ]},
+    { id:'d12', date:"2026-09-27", title:"Sofia", items:[
+      { time:"10:00", activity:"Check in at Best Western Terminus", note:"" },
+      { time:"11:00", activity:"Alexander Nevsky Cathedral", note:"" },
+      { time:"13:00", activity:"Sofia old town wander", note:"" }
+    ]},
+    { id:'d13', date:"2026-09-28", title:"Rila Monastery & Boyana Church day trip", items:[
+      { time:"08:00", activity:"Guided day trip departs Sofia", note:"~$66" },
+      { time:"10:00", activity:"Rila Monastery", note:"" },
+      { time:"14:00", activity:"Boyana Church", note:"UNESCO frescoes" }
+    ]},
+    { id:'d14', date:"2026-09-29", title:"Sofia → Skopje", items:[
+      { time:"10:00", activity:"Daytime bus to Skopje", note:"~5 hrs" },
+      { time:"16:00", activity:"Check in at Apart Hotel Solaris", note:"" },
+      { time:"17:30", activity:"Old Bazaar + Stone Bridge sunset walk", note:"" }
+    ]},
+    { id:'d15', date:"2026-09-30", title:"Matka Canyon day trip", items:[
+      { time:"09:00", activity:"Matka Canyon boat ride + cave visit", note:"~25 EUR" },
+      { time:"13:00", activity:"Millennium Cross cable car", note:"" },
+      { time:"16:00", activity:"Macedonia Square + Skopje Fortress", note:"" }
+    ]},
+    { id:'d16', date:"2026-10-01", title:"Skopje → Tirana", items:[
+      { time:"09:00", activity:"Daytime bus to Tirana", note:"" },
+      { time:"17:00", activity:"Check in at Hotel Baron", note:"" },
+      { time:"19:00", activity:"Dinner at Oda Restaurant", note:"A must" }
+    ]},
+    { id:'d17', date:"2026-10-02", title:"Tirana", items:[
+      { time:"09:00", activity:"Skanderbeg Square + National History Museum", note:"" },
+      { time:"11:00", activity:"Bunk'Art 1", note:"Taxi, outside center" },
+      { time:"14:00", activity:"Pyramid of Tirana + Et'hem Bey Mosque", note:"" },
+      { time:"16:00", activity:"Blloku area cafés", note:"" }
+    ]},
+    { id:'d18', date:"2026-10-03", title:"Berat day trip", items:[
+      { time:"08:00", activity:"Day trip to Berat — \"City of a Thousand Windows\"", note:"" },
+      { time:"10:00", activity:"Hilltop castle views", note:"" },
+      { time:"13:00", activity:"Lunch at Home-made Lili", note:"" }
+    ]},
+    { id:'d19', date:"2026-10-04", title:"Komani Lake day trip", items:[
+      { time:"07:00", activity:"Guided tour departs", note:"Mickey Tours / Komani Lake Ferry" },
+      { time:"09:00", activity:"Scenic ferry through the canyon", note:"" }
+    ]},
+    { id:'d20', date:"2026-10-05", title:"Himara beach-hopping day trip", items:[
+      { time:"07:00", activity:"Guided coastal tour departs", note:"Fotis Tour Company" },
+      { time:"10:00", activity:"Gjipe Beach", note:"" },
+      { time:"14:00", activity:"Himara beaches", note:"" }
+    ]},
+    { id:'d21', date:"2026-10-06", title:"Tirana → Podgorica", items:[
+      { time:"09:00", activity:"Dajti Ekspres cable car", note:"Closed Tuesdays — double check" },
+      { time:"11:00", activity:"New Bazaar, last look at Tirana", note:"" },
+      { time:"13:00", activity:"Daytime bus to Podgorica", note:"" },
+      { time:"18:00", activity:"Check in at Hotel Evropa", note:"" }
+    ]},
+    { id:'d22', date:"2026-10-07", title:"Podgorica → Kotor", items:[
+      { time:"08:00", activity:"Bus to Virpazar for Lake Skadar National Park", note:"" },
+      { time:"09:00", activity:"Lake Skadar boat option + Besac Castle ruins", note:"" },
+      { time:"13:00", activity:"Daytime bus to Kotor", note:"" },
+      { time:"18:00", activity:"Check in at D & Sons Apartments, Kotor Old Town walk", note:"" }
+    ]},
+    { id:'d23', date:"2026-10-08", title:"Kotor → Dubrovnik", items:[
+      { time:"07:00", activity:"Kotor City Walls hike", note:"Before the heat" },
+      { time:"10:00", activity:"Cathedral of Saint Tryphon", note:"" },
+      { time:"11:30", activity:"Blue Cave boat tour", note:"Sea Stars" },
+      { time:"14:00", activity:"Daytime bus to Dubrovnik", note:"" },
+      { time:"18:00", activity:"Check in at Guest House Bradas", note:"" }
+    ]},
+    { id:'d24', date:"2026-10-09", title:"Dubrovnik", items:[
+      { time:"07:00", activity:"Old Town walls walk", note:"Early, before crowds" },
+      { time:"10:00", activity:"Game of Thrones walking tour", note:"~$35" },
+      { time:"13:00", activity:"Lovrijenac Fortress", note:"" },
+      { time:"19:00", activity:"Stradun evening stroll", note:"" }
+    ]},
+    { id:'d25', date:"2026-10-10", title:"Dubrovnik → Split", items:[
+      { time:"09:00", activity:"Lokrum Island ferry + Benedictine Monastery", note:"" },
+      { time:"13:00", activity:"Daytime bus to Split", note:"" },
+      { time:"18:00", activity:"Check in at Luxury Rooms Fetivi, Riva waterfront walk", note:"" }
+    ]},
+    { id:'d26', date:"2026-10-11", title:"Split → Zadar → Zagreb", items:[
+      { time:"08:00", activity:"Diocletian's Palace & cellars", note:"" },
+      { time:"09:30", activity:"Climb the Cathedral of Saint Domnius bell tower", note:"" },
+      { time:"11:00", activity:"Daytime bus toward Zadar", note:"" },
+      { time:"13:00", activity:"Quick stop in Zadar old town", note:"" },
+      { time:"15:00", activity:"Continue on to Zagreb", note:"" },
+      { time:"19:00", activity:"Check in at HI Hostel Zagreb", note:"" }
+    ]},
+    { id:'d27', date:"2026-10-12", title:"Zagreb", items:[
+      { time:"09:00", activity:"Upper Town (Gornji Grad)", note:"" },
+      { time:"10:00", activity:"St. Mark's Church + Ban Jelačić Square", note:"" },
+      { time:"12:00", activity:"Dolac Market", note:"" },
+      { time:"14:00", activity:"Museum of Broken Relationships", note:"" }
+    ]},
+    { id:'d28', date:"2026-10-13", title:"Plitvice Lakes National Park", items:[
+      { time:"07:00", activity:"Day trip to Plitvice", note:"Book tickets online ahead" },
+      { time:"08:30", activity:"Enter via Entrance 1 for quick access to Veliki Slap", note:"" },
+      { time:"09:00", activity:"Program C route — lower + upper lakes, boat, panoramic train", note:"4–6 hrs" }
+    ]},
+    { id:'d29', date:"2026-10-14", title:"Zagreb → Ljubljana", items:[
+      { time:"10:00", activity:"Free morning in Zagreb", note:"" },
+      { time:"13:00", activity:"Daytime bus to Ljubljana", note:"" },
+      { time:"17:00", activity:"Check in at Hostel Most, Old Town walk", note:"" },
+      { time:"19:00", activity:"Prešeren Square & Triple Bridge", note:"" }
+    ]},
+    { id:'d30', date:"2026-10-15", title:"Ljubljana & Lake Bled", items:[
+      { time:"09:00", activity:"Ljubljana Castle + Central Market", note:"" },
+      { time:"12:00", activity:"Bus to Lake Bled", note:"~1.5 hrs" },
+      { time:"13:00", activity:"Bled Castle + boat to Bled Island", note:"Overnight bus to Budapest tonight" }
+    ]},
+    { id:'d31', date:"2026-10-16", title:"Budapest", items:[
+      { time:"10:00", activity:"Check in at Omega Guesthouse", note:"" },
+      { time:"11:00", activity:"St. Stephen's Basilica", note:"" },
+      { time:"13:00", activity:"Central Market Hall", note:"" },
+      { time:"18:00", activity:"Fisherman's Bastion + Chain Bridge at sunset", note:"" }
+    ]},
+    { id:'d32', date:"2026-10-17", title:"Budapest", items:[
+      { time:"09:00", activity:"Buda Castle / Royal Palace", note:"" },
+      { time:"10:30", activity:"Matthias Church", note:"" },
+      { time:"14:00", activity:"Gellért Hill & Thermal Bath", note:"" },
+      { time:"19:30", activity:"Danube sunset boat cruise", note:"~$26" }
+    ]},
+    { id:'d33', date:"2026-10-18", title:"Budapest → Košice", items:[
+      { time:"10:00", activity:"Daytime bus to Košice", note:"" },
+      { time:"17:00", activity:"Check in at Penzión Sport", note:"" },
+      { time:"18:00", activity:"Hlavná Street walk, dinner", note:"" }
+    ]},
+    { id:'d34', date:"2026-10-19", title:"Košice → Wrocław", items:[
+      { time:"09:00", activity:"St. Elizabeth Cathedral tower climb", note:"" },
+      { time:"10:30", activity:"East Slovak Museum — Golden Treasure collection", note:"" },
+      { time:"13:00", activity:"Daytime bus to Wrocław", note:"" },
+      { time:"19:00", activity:"Check in at Hotel Piast, old town evening walk", note:"" }
+    ]},
+    { id:'d35', date:"2026-10-20", title:"Wrocław → Warsaw", items:[
+      { time:"09:00", activity:"Wrocław market square, morning walk", note:"" },
+      { time:"12:00", activity:"Daytime bus to Warsaw", note:"" },
+      { time:"18:00", activity:"Check in at Level Rooms", note:"" },
+      { time:"19:30", activity:"First look at Warsaw Old Town", note:"" }
+    ]},
+    { id:'d36', date:"2026-10-21", title:"Warsaw", items:[
+      { time:"09:00", activity:"Warsaw Old Town, full walk", note:"" },
+      { time:"13:00", activity:"Optional: Gdańsk & Sopot day trip by train", note:"Full day, only if energy allows" }
+    ]},
+    { id:'d37', date:"2026-10-22", title:"Fly home", items:[
+      { time:"08:00", activity:"Check out, head to WAW", note:"" },
+      { time:"11:50", activity:"Flight WAW → YUL departs", note:"" },
+      { time:"20:15", activity:"Arrive home in Montreal", note:"" }
+    ]}
+  ]
+};
+
+let data = loadData();
+
+function loadData(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(raw){
+    try {
+      const parsed = JSON.parse(raw);
+      if(!parsed.transit) parsed.transit = [];
+      return parsed;
+    } catch(e){ return structuredClone(defaultData); }
+  }
+  return structuredClone(defaultData);
+}
+function saveData(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+/* ================= FLAGS & EMOJI ================= */
+const FLAG_MAP = {
+  "Montreal":"🇨🇦", "YUL":"🇨🇦",
+  "Istanbul":"🇹🇷", "Denizli":"🇹🇷", "Pamukkale":"🇹🇷", "Konya":"🇹🇷",
+  "Göreme":"🇹🇷", "Cappadocia":"🇹🇷", "Nevşehir":"🇹🇷", "IST":"🇹🇷",
+  "Bucharest":"🇷🇴", "Brașov":"🇷🇴", "Bran":"🇷🇴", "Peleș":"🇷🇴",
+  "Sofia":"🇧🇬", "Rila":"🇧🇬", "Boyana":"🇧🇬",
+  "Skopje":"🇲🇰", "Matka":"🇲🇰",
+  "Tirana":"🇦🇱", "Berat":"🇦🇱", "Komani":"🇦🇱", "Himara":"🇦🇱",
+  "Podgorica":"🇲🇪", "Kotor":"🇲🇪", "Skadar":"🇲🇪",
+  "Dubrovnik":"🇭🇷", "Split":"🇭🇷", "Zadar":"🇭🇷", "Zagreb":"🇭🇷", "Plitvice":"🇭🇷",
+  "Ljubljana":"🇸🇮", "Bled":"🇸🇮",
+  "Budapest":"🇭🇺",
+  "Košice":"🇸🇰",
+  "Wrocław":"🇵🇱", "Warsaw":"🇵🇱", "WAW":"🇵🇱"
+};
+function cityFlag(text){
+  if(!text) return "📍";
+  for(const key in FLAG_MAP){
+    if(text.includes(key)) return FLAG_MAP[key];
+  }
+  return "📍";
+}
+const EMOJI_RULES = [
+  [/flight|land at|fly /, '✈️'],
+  [/balloon/, '🎈'],
+  [/sunrise/, '🌄'],
+  [/sunset/, '🌅'],
+  [/dinner/, '🍽️'],
+  [/lunch/, '🍽️'],
+  [/breakfast/, '🍳'],
+  [/check in/, '🛎️'],
+  [/check out/, '🧳'],
+  [/castle|palace|fortress/, '🏰'],
+  [/mosque/, '🕌'],
+  [/cathedral|church|monastery|basilica|temple/, '⛪'],
+  [/museum/, '🖼️'],
+  [/beach/, '🏖️'],
+  [/swim|pool/, '🏊'],
+  [/boat|ferry|cruise/, '⛴️'],
+  [/cable car/, '🚡'],
+  [/bus/, '🚌'],
+  [/train/, '🚆'],
+  [/hike|walk|stroll/, '🥾'],
+  [/market|bazaar|caf[ée]|shop/, '🛍️'],
+  [/waterfall/, '💦'],
+  [/lake|canyon|valley|garden|park/, '🏞️'],
+  [/cave/, '🕳️'],
+  [/tower/, '🗼'],
+  [/bridge/, '🌉'],
+  [/square/, '🏛️'],
+  [/wall/, '🧱'],
+  [/bath/, '♨️'],
+  [/pyramid/, '🔺']
+];
+function activityEmoji(text){
+  const t = (text||'').toLowerCase();
+  for(const [re, emoji] of EMOJI_RULES){ if(re.test(t)) return emoji; }
+  return '📍';
+}
+
+/* ================= UTIL ================= */
+function todayISO(){
+  const d = new Date();
+  return d.toISOString().slice(0,10);
+}
+function fmtDate(iso){
+  if(!iso) return '';
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString(undefined, { weekday:'short', month:'short', day:'numeric' });
+}
+function daysBetween(iso){
+  const now = new Date();
+  const target = new Date(iso + 'T00:00:00');
+  const ms = target - new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return Math.round(ms / 86400000);
+}
+function uid(){ return 'id' + Math.random().toString(36).slice(2,9); }
+function nominalTime(mode){
+  if(!mode) return '12:00';
+  return /overnight/i.test(mode) ? '21:00' : '09:00';
+}
+
+/* ================= TABS ================= */
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('view-' + btn.dataset.view).classList.add('active');
+    if(btn.dataset.view === 'settings'){
+      document.getElementById('settingsTripName').value = data.tripName || '';
+      document.getElementById('settingsTripSub').value = data.tripSub || '';
+    }
+  });
+});
+
+/* ================= RENDER: HEADER ================= */
+function renderHeader(){
+  document.getElementById('tripTitleDisplay').textContent = data.tripName || 'My Trip';
+  document.getElementById('tripSubDisplay').textContent = data.tripSub || 'Tap Settings to name your trip';
+}
+
+/* ================= RENDER: TODAY BOARD ================= */
+function renderToday(){
+  const board = document.getElementById('board');
+  const now = new Date();
+  const dateStr = now.toLocaleDateString(undefined, { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+
+  const events = [];
+  data.flights.forEach(f=>{
+    events.push({ date:f.date, sortTime:f.depart||'12:00', title:`✈️ Flight ${cityFlag(f.from)}${f.from} → ${cityFlag(f.to)}${f.to}`, meta:`Departs ${f.depart || '—'}${f.airline ? ' · ' + f.airline : ''}` });
+  });
+  data.hotels.forEach(h=>{
+    events.push({ date:h.checkIn,  sortTime:'15:00', title:`🛎️ Check in — ${cityFlag(h.address)} ${h.name}`,  meta:h.address });
+    events.push({ date:h.checkOut, sortTime:'11:00', title:`🧳 Check out — ${cityFlag(h.address)} ${h.name}`, meta:h.address });
+  });
+  data.transit.forEach(t=>{
+    const icon = /overnight/i.test(t.mode) ? '🌙' : '🚌';
+    events.push({ date:t.date, sortTime:nominalTime(t.mode), title:`${icon} ${t.mode} — ${cityFlag(t.from)}${t.from} → ${cityFlag(t.to)}${t.to}`, meta:t.detail || 'Transit day' });
+  });
+
+  const todayStr = todayISO();
+  const upcoming = events
+    .filter(e=> e.date >= todayStr)
+    .sort((a,b)=> (a.date+a.sortTime).localeCompare(b.date+b.sortTime));
+
+  const next = upcoming[0];
+
+  let html = `<div class="board-date">${dateStr}</div>`;
+
+  if(next){
+    const diff = daysBetween(next.date);
+    let whenLabel;
+    if(diff === 0) whenLabel = 'Today';
+    else if(diff === 1) whenLabel = 'Tomorrow';
+    else if(diff > 1) whenLabel = `In ${diff} days`;
+    else whenLabel = fmtDate(next.date);
+
+    html += `
+      <div class="board-next-label">Next up · ${whenLabel}</div>
+      <div class="board-next-title">${next.title}</div>
+      <div class="board-next-meta">
+        <div class="board-metric"><div class="num">${fmtDate(next.date)}</div><div class="lbl">DATE</div></div>
+        <div class="board-metric"><div class="num">${next.sortTime}</div><div class="lbl">TIME</div></div>
+      </div>
+      <div style="margin-top:11px; color:#C7CBEF; font-size:14.5px; font-weight:700;">${next.meta || ''}</div>
+    `;
+  } else {
+    html += `<div class="board-empty">No upcoming flights, hotels, or transit legs — check the other tabs.</div>`;
+  }
+
+  const todaysDay = data.days.find(d=> d.date === todayStr);
+  if(todaysDay && todaysDay.items.length){
+    html += `<div class="board-today-list"><h4>Today's plan — ${cityFlag(todaysDay.title)} ${todaysDay.title}</h4>`;
+    todaysDay.items.forEach(it=>{
+      html += `<div class="board-row"><div class="time">${it.time || '—'}</div><div>${activityEmoji(it.activity)} ${it.activity}</div></div>`;
+    });
+    html += `</div>`;
+  }
+
+  board.innerHTML = html;
+
+  const container = document.getElementById('todayItinerary');
+  if(!todaysDay){
+    const futureDays = data.days.filter(d=> d.date > todayStr).sort((a,b)=> a.date.localeCompare(b.date));
+    if(futureDays.length){
+      container.innerHTML = `<h2 class="section-title">📅 Coming up</h2>` +
+        futureDays.slice(0,2).map(d=> dayCardHTML(d, false)).join('');
+    } else {
+      container.innerHTML = '';
+    }
+  } else {
+    container.innerHTML = '';
+  }
+}
+
+/* ================= RENDER: FLIGHTS ================= */
+function renderFlights(){
+  const list = document.getElementById('flightsList');
+  if(!data.flights.length){
+    list.innerHTML = `<div class="empty">No flights yet. Add your first one above.</div>`;
+    return;
+  }
+  const sorted = [...data.flights].sort((a,b)=> (a.date+a.depart).localeCompare(b.date+b.depart));
+  list.innerHTML = sorted.map(f=>`
+    <div class="ticket flight-ticket">
+      <div class="ticket-main">
+        <div class="ticket-route">
+          <span class="ticket-city">${cityFlag(f.from)} ${f.from}</span>
+          <span class="ticket-arrow">✈ →</span>
+          <span class="ticket-city">${cityFlag(f.to)} ${f.to}</span>
+        </div>
+        <div class="ticket-date">${fmtDate(f.date)}${f.airline ? ' · ' + f.airline : ''}</div>
+        <div class="ticket-times">
+          <div class="ticket-time"><div class="num">${f.depart || '--:--'}</div><div class="lbl">Depart</div></div>
+          <div class="ticket-time"><div class="num">${f.arrive || '--:--'}</div><div class="lbl">Arrive</div></div>
+        </div>
+      </div>
+      <div class="ticket-perf"></div>
+      <div class="ticket-foot">
+        <span class="ticket-code">Conf: ${f.confirmation || '—'}</span>
+        <span class="paid">${f.paid || '—'}</span>
+      </div>
+      <div class="card-actions">
+        <button onclick="openFlightForm('${f.id}')">Edit</button>
+        <button onclick="deleteItem('flights','${f.id}')">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ================= RENDER: HOTELS ================= */
+function renderHotels(){
+  const list = document.getElementById('hotelsList');
+  if(!data.hotels.length){
+    list.innerHTML = `<div class="empty">No hotels yet. Add your first one above.</div>`;
+    return;
+  }
+  const sorted = [...data.hotels].sort((a,b)=> a.checkIn.localeCompare(b.checkIn));
+  list.innerHTML = sorted.map(h=>`
+    <div class="ticket hotel-ticket">
+      <div class="ticket-main">
+        <div class="hotel-name">${cityFlag(h.address)} ${h.name}</div>
+        <div class="hotel-addr">${h.address || ''}</div>
+        <div class="hotel-stay">
+          <div class="ticket-time"><div class="num">${fmtDate(h.checkIn)}</div><div class="lbl">Check in</div></div>
+          <div class="ticket-time"><div class="num">${fmtDate(h.checkOut)}</div><div class="lbl">Check out</div></div>
+        </div>
+      </div>
+      <div class="ticket-perf"></div>
+      <div class="ticket-foot">
+        <span class="ticket-code">Conf: ${h.confirmation || '—'}</span>
+        <span class="paid">${h.paid || '—'}</span>
+      </div>
+      <div class="card-actions">
+        <button onclick="openHotelForm('${h.id}')">Edit</button>
+        <button onclick="deleteItem('hotels','${h.id}')">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ================= RENDER: TRANSIT ================= */
+function renderTransit(){
+  const list = document.getElementById('transitList');
+  if(!data.transit.length){
+    list.innerHTML = `<div class="empty">No transit legs yet. Add your first bus, train, or ferry above.</div>`;
+    return;
+  }
+  const sorted = [...data.transit].sort((a,b)=> a.date.localeCompare(b.date));
+  const icon = m => /overnight/i.test(m) ? '🌙' : '🚌';
+  list.innerHTML = sorted.map(t=>`
+    <div class="transit-card">
+      <div class="transit-icon">${icon(t.mode)}</div>
+      <div class="transit-body">
+        <div class="transit-mode">${t.mode} · ${fmtDate(t.date)}</div>
+        <div class="transit-route">${cityFlag(t.from)} ${t.from} → ${cityFlag(t.to)} ${t.to}</div>
+        ${t.detail ? `<div class="transit-meta">${t.detail}</div>` : ''}
+      </div>
+      <div class="card-actions">
+        <button onclick="openTransitForm('${t.id}')">Edit</button>
+        <button onclick="deleteItem('transit','${t.id}')">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ================= RENDER: ITINERARY ================= */
+function dayCardHTML(d, showActions=true){
+  const isToday = d.date === todayISO();
+  const items = (d.items||[]).slice().sort((a,b)=> (a.time||'').localeCompare(b.time||''));
+  return `
+    <div class="day-card">
+      <div class="day-head">
+        <div>
+          <div class="day-date">${fmtDate(d.date)}</div>
+          <div class="day-title">${cityFlag(d.title)} ${d.title}${isToday ? '<span class="today-badge">Today</span>' : ''}</div>
+        </div>
+      </div>
+      <ul class="day-items">
+        ${items.map(it=>`
+          <li class="day-item">
+            <div class="time">${it.time || '—'}</div>
+            <div>
+              <div>${activityEmoji(it.activity)} ${it.activity}</div>
+              ${it.note ? `<div class="note">${it.note}</div>` : ''}
+            </div>
+          </li>
+        `).join('') || '<li class="day-item"><div class="note">No activities added yet.</div></li>'}
+      </ul>
+      ${showActions ? `
+        <div class="day-actions">
+          <button onclick="openDayForm('${d.id}')" style="background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;margin-right:14px;font-weight:700;">Edit</button>
+          <button onclick="deleteItem('days','${d.id}')" style="background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;font-weight:700;">Delete</button>
+        </div>` : ''}
+    </div>
+  `;
+}
+function renderItinerary(){
+  const list = document.getElementById('itineraryList');
+  if(!data.days.length){
+    list.innerHTML = `<div class="empty">No days planned yet. Add your first day above.</div>`;
+    return;
+  }
+  const sorted = [...data.days].sort((a,b)=> a.date.localeCompare(b.date));
+  list.innerHTML = sorted.map(d=> dayCardHTML(d, true)).join('');
+}
+
+/* ================= RENDER ALL ================= */
+function renderAll(){
+  renderHeader();
+  renderToday();
+  renderFlights();
+  renderHotels();
+  renderTransit();
+  renderItinerary();
+}
+
+/* ================= DELETE ================= */
+function deleteItem(coll, id){
+  if(!confirm('Delete this entry?')) return;
+  data[coll] = data[coll].filter(x=> x.id !== id);
+  saveData();
+  renderAll();
+}
+
+/* ================= MODAL HELPERS ================= */
+const overlay = document.getElementById('overlay');
+const sheet = document.getElementById('sheet');
+function closeModal(){ overlay.classList.remove('active'); sheet.innerHTML=''; }
+overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeModal(); });
+
+/* ---- Flight form ---- */
+function openFlightForm(id){
+  const existing = id ? data.flights.find(f=>f.id===id) : null;
+  sheet.innerHTML = `
+    <h3>${existing ? 'Edit flight' : 'Add flight'}</h3>
+    <div class="field-row">
+      <div class="field"><label>From (airport code)</label><input id="f_from" value="${existing?.from||''}" placeholder="SFO"></div>
+      <div class="field"><label>To (airport code)</label><input id="f_to" value="${existing?.to||''}" placeholder="NRT"></div>
+    </div>
+    <div class="field"><label>Date</label><input type="date" id="f_date" value="${existing?.date||''}"></div>
+    <div class="field-row">
+      <div class="field"><label>Depart time</label><input type="time" id="f_depart" value="${existing?.depart||''}"></div>
+      <div class="field"><label>Arrive time</label><input type="time" id="f_arrive" value="${existing?.arrive||''}"></div>
+    </div>
+    <div class="field"><label>Airline / flight no.</label><input id="f_airline" value="${existing?.airline||''}" placeholder="ANA 7"></div>
+    <div class="field-row">
+      <div class="field"><label>Confirmation code</label><input id="f_conf" value="${existing?.confirmation||''}"></div>
+      <div class="field"><label>Amount paid</label><input id="f_paid" value="${existing?.paid||''}" placeholder="$842.00"></div>
+    </div>
+    <div class="sheet-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveFlight('${existing?.id||''}')">${existing?'Save changes':'Add flight'}</button>
+    </div>
+  `;
+  overlay.classList.add('active');
+}
+function saveFlight(id){
+  const obj = {
+    id: id || uid(),
+    from: val('f_from').toUpperCase(),
+    to: val('f_to').toUpperCase(),
+    date: val('f_date'),
+    depart: val('f_depart'),
+    arrive: val('f_arrive'),
+    airline: val('f_airline'),
+    confirmation: val('f_conf'),
+    paid: val('f_paid')
+  };
+  if(!obj.from || !obj.to || !obj.date){ alert('Please fill in From, To, and Date.'); return; }
+  if(id){
+    const idx = data.flights.findIndex(f=>f.id===id);
+    data.flights[idx] = obj;
+  } else {
+    data.flights.push(obj);
+  }
+  saveData(); closeModal(); renderAll();
+}
+
+/* ---- Hotel form ---- */
+function openHotelForm(id){
+  const existing = id ? data.hotels.find(h=>h.id===id) : null;
+  sheet.innerHTML = `
+    <h3>${existing ? 'Edit hotel' : 'Add hotel'}</h3>
+    <div class="field"><label>Hotel name</label><input id="h_name" value="${existing?.name||''}" placeholder="Hotel Granvia Kyoto"></div>
+    <div class="field"><label>Address</label><input id="h_addr" value="${existing?.address||''}" placeholder="City, Country"></div>
+    <div class="field-row">
+      <div class="field"><label>Check-in date</label><input type="date" id="h_in" value="${existing?.checkIn||''}"></div>
+      <div class="field"><label>Check-out date</label><input type="date" id="h_out" value="${existing?.checkOut||''}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Confirmation code</label><input id="h_conf" value="${existing?.confirmation||''}"></div>
+      <div class="field"><label>Amount paid</label><input id="h_paid" value="${existing?.paid||''}" placeholder="$680.00"></div>
+    </div>
+    <div class="sheet-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveHotel('${existing?.id||''}')">${existing?'Save changes':'Add hotel'}</button>
+    </div>
+  `;
+  overlay.classList.add('active');
+}
+function saveHotel(id){
+  const obj = {
+    id: id || uid(),
+    name: val('h_name'),
+    address: val('h_addr'),
+    checkIn: val('h_in'),
+    checkOut: val('h_out'),
+    confirmation: val('h_conf'),
+    paid: val('h_paid')
+  };
+  if(!obj.name || !obj.checkIn || !obj.checkOut){ alert('Please fill in name, check-in, and check-out.'); return; }
+  if(id){
+    const idx = data.hotels.findIndex(h=>h.id===id);
+    data.hotels[idx] = obj;
+  } else {
+    data.hotels.push(obj);
+  }
+  saveData(); closeModal(); renderAll();
+}
+
+/* ---- Transit form ---- */
+function openTransitForm(id){
+  const existing = id ? data.transit.find(t=>t.id===id) : null;
+  sheet.innerHTML = `
+    <h3>${existing ? 'Edit transit leg' : 'Add bus / transit leg'}</h3>
+    <div class="field">
+      <label>Mode</label>
+      <select id="t_mode">
+        ${['Daytime bus','Overnight bus','Overnight sleeper','Train','Ferry','Other'].map(m=>
+          `<option value="${m}" ${existing?.mode===m?'selected':''}>${m}</option>`).join('')}
+      </select>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>From</label><input id="t_from" value="${existing?.from||''}" placeholder="Istanbul"></div>
+      <div class="field"><label>To</label><input id="t_to" value="${existing?.to||''}" placeholder="Denizli"></div>
+    </div>
+    <div class="field"><label>Departure date</label><input type="date" id="t_date" value="${existing?.date||''}"></div>
+    <div class="field"><label>Notes</label><input id="t_detail" value="${existing?.detail||''}" placeholder="Night of Sep 17 · ~4 hrs"></div>
+    <div class="sheet-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveTransit('${existing?.id||''}')">${existing?'Save changes':'Add leg'}</button>
+    </div>
+  `;
+  overlay.classList.add('active');
+}
+function saveTransit(id){
+  const obj = {
+    id: id || uid(),
+    mode: val('t_mode') || document.getElementById('t_mode').value,
+    from: val('t_from'),
+    to: val('t_to'),
+    date: val('t_date'),
+    detail: val('t_detail')
+  };
+  if(!obj.from || !obj.to || !obj.date){ alert('Please fill in From, To, and Date.'); return; }
+  if(id){
+    const idx = data.transit.findIndex(t=>t.id===id);
+    data.transit[idx] = obj;
+  } else {
+    data.transit.push(obj);
+  }
+  saveData(); closeModal(); renderAll();
+}
+
+/* ---- Day form ---- */
+let editingDayItems = [];
+function openDayForm(id){
+  const existing = id ? data.days.find(d=>d.id===id) : null;
+  editingDayItems = existing ? JSON.parse(JSON.stringify(existing.items||[])) : [];
+  sheet.innerHTML = `
+    <h3>${existing ? 'Edit day' : 'Add day'}</h3>
+    <div class="field"><label>Date</label><input type="date" id="d_date" value="${existing?.date||''}"></div>
+    <div class="field"><label>Day title</label><input id="d_title" value="${existing?.title||''}" placeholder="Shinjuku & Shibuya"></div>
+    <div class="day-items-editor">
+      <label style="display:block;font-size:12.5px;color:var(--muted);margin-bottom:8px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;">Activities</label>
+      <div id="itemRows"></div>
+      <button type="button" class="add-item-btn" onclick="addItemRow()">+ Add activity</button>
+    </div>
+    <div class="sheet-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveDay('${existing?.id||''}')">${existing?'Save changes':'Add day'}</button>
+    </div>
+  `;
+  renderItemRows();
+  overlay.classList.add('active');
+}
+function renderItemRows(){
+  const wrap = document.getElementById('itemRows');
+  wrap.innerHTML = editingDayItems.map((it,i)=>`
+    <div class="item-row">
+      <input class="time-input" type="time" value="${it.time||''}" onchange="editingDayItems[${i}].time=this.value">
+      <input placeholder="Activity" value="${it.activity||''}" onchange="editingDayItems[${i}].activity=this.value">
+      <button type="button" class="rm" onclick="removeItemRow(${i})">×</button>
+    </div>
+  `).join('');
+}
+function addItemRow(){
+  editingDayItems.push({ time:'', activity:'', note:'' });
+  renderItemRows();
+}
+function removeItemRow(i){
+  editingDayItems.splice(i,1);
+  renderItemRows();
+}
+function saveDay(id){
+  const obj = {
+    id: id || uid(),
+    date: val('d_date'),
+    title: val('d_title'),
+    items: editingDayItems.filter(it=> it.activity && it.activity.trim())
+  };
+  if(!obj.date || !obj.title){ alert('Please fill in date and title.'); return; }
+  if(id){
+    const idx = data.days.findIndex(d=>d.id===id);
+    data.days[idx] = obj;
+  } else {
+    data.days.push(obj);
+  }
+  saveData(); closeModal(); renderAll();
+}
+
+function val(id){ return document.getElementById(id).value.trim(); }
+
+/* ================= SETTINGS ================= */
+function saveTripInfo(){
+  data.tripName = document.getElementById('settingsTripName').value.trim();
+  data.tripSub = document.getElementById('settingsTripSub').value.trim();
+  saveData();
+  renderHeader();
+  renderToday();
+}
+function exportData(){
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = (data.tripName || 'travel-guide').replace(/\s+/g,'-').toLowerCase() + '-backup.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+document.getElementById('importFile').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev)=>{
+    try{
+      const parsed = JSON.parse(ev.target.result);
+      if(!parsed.flights || !parsed.hotels || !parsed.days){ throw new Error('bad format'); }
+      if(!parsed.transit) parsed.transit = [];
+      data = parsed;
+      saveData();
+      renderAll();
+      alert('Import complete.');
+    }catch(err){
+      alert('That file could not be read as a travel guide backup.');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+});
+function clearAllData(){
+  if(!confirm('This will permanently delete all flights, hotels, transit legs, and itinerary days. Continue?')) return;
+  data = { tripName:'', tripSub:'', flights:[], hotels:[], transit:[], days:[] };
+  saveData();
+  renderAll();
+}
+
+/* ================= INIT ================= */
+renderAll();
+</script>
+</body>
+</html>
