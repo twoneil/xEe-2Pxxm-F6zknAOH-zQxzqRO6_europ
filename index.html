@@ -46,17 +46,6 @@
     background:var(--ink);
     color:var(--white);
     padding:30px 20px 24px;
-    position:relative;
-    overflow:hidden;
-  }
-  header::after{
-    content:"";
-    position:absolute; left:0; right:0; bottom:0;
-    height:7px;
-    background:repeating-linear-gradient(90deg,
-      var(--blue) 0 18px, var(--orange) 18px 36px,
-      var(--green) 36px 54px, var(--pink) 54px 72px,
-      var(--purple) 72px 90px, var(--yellow) 90px 108px);
   }
   .trip-title{
     font-family:'Outfit', sans-serif;
@@ -104,76 +93,143 @@
   .view{display:none;}
   .view.active{display:block;}
 
-  /* ---------- Today board ---------- */
-  .board{
-    background:var(--ink);
-    color:var(--white);
-    border-radius:14px;
-    padding:22px 20px;
-    margin-bottom:22px;
-    box-shadow:0 10px 26px rgba(11,15,43,.28);
-    border:2px solid var(--ink-2);
-  }
-  .board-date{
-    font-size:13px;
-    letter-spacing:.03em;
-    color:#9CA3E0;
-    margin-bottom:14px;
-    font-weight:700;
-  }
-  .board-next-label{
-    font-size:12.5px;
-    text-transform:uppercase;
-    letter-spacing:.1em;
-    color:var(--yellow);
-    font-weight:800;
-    margin-bottom:8px;
-  }
-  .board-next-title{
-    font-family:'Outfit', sans-serif;
-    font-size:25px;
-    font-weight:800;
-    line-height:1.2;
-    margin-bottom:12px;
-  }
-  .board-next-meta{
+  /* ---------- Date scroller ---------- */
+  .scroller-wrap{
     display:flex;
-    gap:24px;
-    flex-wrap:wrap;
-    font-family:'JetBrains Mono', monospace;
+    align-items:center;
+    gap:8px;
+    margin-bottom:18px;
   }
-  .board-metric .num{font-size:22px; font-weight:800; color:var(--white);}
-  .board-metric .lbl{font-size:11.5px; color:#9CA3E0; letter-spacing:.05em; font-weight:700;}
-  .board-empty{color:#C7CBEF; font-size:15px; padding:6px 0; font-weight:700;}
-
-  .board-today-list{
-    margin-top:18px;
-    padding-top:16px;
-    border-top:2px dashed #33396B;
-  }
-  .board-today-list h4{
-    margin:0 0 10px;
-    font-size:12.5px;
-    text-transform:uppercase;
-    letter-spacing:.1em;
-    color:var(--yellow);
+  .scroll-arrow{
+    flex:0 0 auto;
+    width:38px; height:38px;
+    border-radius:50%;
+    border:2px solid var(--line);
+    background:var(--white);
+    font-size:17px;
     font-weight:800;
+    color:var(--ink);
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
   }
-  .board-row{
+  .scroll-arrow:hover{background:var(--paper-2);}
+  #dateScroller{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    scroll-behavior:smooth;
+    padding:4px 2px;
+    scrollbar-width:none;
+    flex:1;
+  }
+  #dateScroller::-webkit-scrollbar{display:none;}
+  .date-chip{
+    flex:0 0 auto;
+    width:54px;
+    padding:9px 0 8px;
+    border-radius:12px;
+    border:2px solid var(--line);
+    background:var(--white);
+    text-align:center;
+    cursor:pointer;
+    font-family:'Outfit', sans-serif;
+  }
+  .date-chip .dow{
+    display:block;
+    font-size:10.5px;
+    font-weight:700;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.04em;
+  }
+  .date-chip .dnum{
+    display:block;
+    font-size:19px;
+    font-weight:800;
+    color:var(--text);
+    margin-top:2px;
+  }
+  .date-chip.active{
+    background:var(--ink);
+    border-color:var(--ink);
+  }
+  .date-chip.active .dow{color:var(--yellow);}
+  .date-chip.active .dnum{color:var(--white);}
+  .date-chip.is-today{border-color:var(--orange);}
+
+  .selected-date-label{
+    font-family:'Outfit', sans-serif;
+    font-size:22px;
+    font-weight:800;
+    margin:2px 0 16px;
+  }
+
+  /* ---------- Sim boxes ---------- */
+  .sim-box{
+    border-radius:14px;
+    padding:19px 20px;
+    margin-bottom:16px;
+    border:2px solid transparent;
+  }
+  .sim-box.purple{ background:#F4EEFE; border-color:var(--purple); }
+  .sim-box.orange{ background:#FFEFE3; border-color:var(--orange); }
+  .sim-box.green{ background:#E4FBF3; border-color:var(--green); }
+  .sim-box.empty{ background:var(--white); border-color:var(--line); }
+
+  .sim-box-label{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.09em;
+    font-weight:800;
+    margin-bottom:10px;
+  }
+  .purple .sim-box-label{ color:var(--purple-deep); }
+  .orange .sim-box-label{ color:var(--orange-deep); }
+  .green .sim-box-label{ color:var(--green-deep); }
+  .empty .sim-box-label{ color:var(--muted); }
+
+  .sim-box-title{
+    font-family:'Outfit', sans-serif;
+    font-size:20px;
+    font-weight:800;
+    margin-bottom:4px;
+  }
+  .sim-box-addr{
+    font-size:14px;
+    color:var(--muted);
+    font-weight:700;
+    margin-bottom:10px;
+    line-height:1.4;
+  }
+  .sim-box-meta{
+    display:flex;
+    gap:26px;
+    font-family:'JetBrains Mono', monospace;
+    margin-top:6px;
+  }
+  .sim-box-meta .num{font-size:20px; font-weight:800;}
+  .sim-box-meta .lbl{font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; font-weight:700;}
+  .sim-box-note{font-size:13.5px; color:var(--muted); font-weight:700; margin-top:8px;}
+  .sim-box-empty-text{font-size:14.5px; color:var(--muted); font-weight:700;}
+
+  .sim-items{list-style:none; margin:0; padding:0;}
+  .sim-item{
     display:flex;
     gap:12px;
     padding:8px 0;
+    border-top:2px solid rgba(124,58,237,.12);
     font-size:15.5px;
-    align-items:baseline;
     font-weight:700;
   }
-  .board-row .time{
+  .sim-item:first-child{border-top:none;}
+  .sim-item .time{
     font-family:'JetBrains Mono', monospace;
-    color:var(--orange);
-    font-weight:800;
-    min-width:62px;
+    color:var(--purple-deep);
+    min-width:56px;
     flex-shrink:0;
+    font-weight:800;
   }
+  .sim-item .note{color:var(--muted); font-size:13.5px; margin-top:3px; font-weight:600;}
 
   /* ---------- Section headers ---------- */
   h2.section-title{
@@ -249,7 +305,7 @@
     color:var(--green-deep);
     font-family:'JetBrains Mono', monospace;
     text-align:right;
-    font-size:15px;
+    font-size:14px;
   }
   .ticket-code{letter-spacing:.03em;}
 
@@ -259,20 +315,19 @@
     font-weight:800;
     margin-bottom:5px;
   }
-  .hotel-addr{font-size:14px; color:var(--muted); margin-bottom:13px; font-weight:700;}
+  .hotel-addr{font-size:14px; color:var(--muted); margin-bottom:13px; font-weight:700; line-height:1.4;}
   .hotel-stay{display:flex; gap:30px; font-family:'JetBrains Mono', monospace;}
 
   /* ---------- Transit cards (buses) ---------- */
   .transit-card{
-    display:flex;
-    align-items:center;
-    gap:14px;
     background:var(--white);
     border:2px solid var(--line);
     border-left:7px solid var(--orange);
     border-radius:10px;
     padding:14px 16px;
     margin-bottom:13px;
+    display:flex;
+    gap:14px;
   }
   .transit-icon{
     font-size:22px;
@@ -292,7 +347,7 @@
     margin-bottom:3px;
   }
   .transit-route{
-    font-family:'Outfit', serif;
+    font-family:'Outfit', sans-serif;
     font-size:18.5px;
     font-weight:800;
   }
@@ -301,6 +356,13 @@
     color:var(--muted);
     margin-top:3px;
     font-weight:700;
+  }
+  .transit-station{
+    font-size:12.5px;
+    color:var(--orange-deep);
+    margin-top:6px;
+    font-weight:700;
+    line-height:1.4;
   }
 
   .card-actions{
@@ -316,9 +378,16 @@
     font-weight:700;
   }
   .card-actions button:hover{color:var(--red);}
-  .transit-card .card-actions{padding:0; margin-left:8px; flex-shrink:0; flex-direction:column; gap:5px; text-align:right;}
+  .transit-card-actions{
+    display:flex; flex-direction:column; gap:5px; text-align:right; flex-shrink:0;
+  }
+  .transit-card-actions button{
+    background:none; border:none; cursor:pointer;
+    font-size:12.5px; color:var(--muted); text-decoration:underline;
+    font-family:'Inter',sans-serif; font-weight:700;
+  }
 
-  /* ---------- Itinerary ---------- */
+  /* ---------- Itinerary (read-only) ---------- */
   .day-card{
     background:var(--white);
     border:2px solid var(--line);
@@ -326,12 +395,6 @@
     border-radius:12px;
     margin-bottom:16px;
     padding:17px 18px;
-  }
-  .day-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    margin-bottom:11px;
   }
   .day-date{
     font-family:'JetBrains Mono', monospace;
@@ -344,6 +407,8 @@
     font-family:'Outfit', sans-serif;
     font-size:20px;
     font-weight:800;
+    margin-top:2px;
+    margin-bottom:11px;
   }
   .day-items{list-style:none; margin:0; padding:0;}
   .day-item{
@@ -363,10 +428,6 @@
     font-weight:800;
   }
   .day-item .note{color:var(--muted); font-size:13.5px; margin-top:3px; font-weight:600;}
-  .day-actions{margin-top:11px; text-align:right;}
-  .day-actions button, .today-badge{
-    font-size:12px;
-  }
 
   .today-badge{
     display:inline-block;
@@ -378,6 +439,7 @@
     margin-left:8px;
     text-transform:uppercase;
     letter-spacing:.04em;
+    font-size:12px;
   }
 
   /* ---------- Empty states ---------- */
@@ -473,20 +535,6 @@
   .btn-save{background:var(--ink); color:var(--white);}
   .btn-cancel{background:var(--paper-2); color:var(--text);}
 
-  .day-items-editor{border-top:2px solid var(--line); margin-top:6px; padding-top:12px;}
-  .item-row{display:flex; gap:8px; margin-bottom:8px; align-items:flex-start;}
-  .item-row input{flex:1;}
-  .item-row input.time-input{max-width:100px; flex:none;}
-  .item-row .rm{
-    background:none; border:none; color:var(--red);
-    font-size:20px; cursor:pointer; padding:6px 4px; line-height:1; font-weight:800;
-  }
-  .add-item-btn{
-    background:none; border:2px dashed var(--line);
-    width:100%; padding:10px; border-radius:8px;
-    font-size:14px; color:var(--muted); cursor:pointer; margin-top:2px; font-weight:700;
-  }
-
   /* ---------- Settings ---------- */
   .settings-block{
     background:var(--white);
@@ -526,19 +574,30 @@
 
 <nav class="tabs">
   <button class="tab-btn active" data-view="today">Today</button>
+  <button class="tab-btn" data-view="itinerary">Itinerary</button>
   <button class="tab-btn" data-view="flights">Flights</button>
   <button class="tab-btn" data-view="hotels">Hotels</button>
   <button class="tab-btn" data-view="transit">Transit</button>
-  <button class="tab-btn" data-view="itinerary">Itinerary</button>
   <button class="tab-btn" data-view="settings">Settings</button>
 </nav>
 
 <main>
 
-  <!-- TODAY -->
+  <!-- TODAY (date-scroller simulator) -->
   <section class="view active" id="view-today">
-    <div class="board" id="board"></div>
-    <div id="todayItinerary"></div>
+    <div class="scroller-wrap">
+      <button class="scroll-arrow" onclick="stepDate(-1)" aria-label="Previous day">‹</button>
+      <div id="dateScroller"></div>
+      <button class="scroll-arrow" onclick="stepDate(1)" aria-label="Next day">›</button>
+    </div>
+    <div class="selected-date-label" id="selectedDateLabel"></div>
+    <div id="simBoxes"></div>
+  </section>
+
+  <!-- ITINERARY (read-only) -->
+  <section class="view" id="view-itinerary">
+    <h2 class="section-title">🗺️ Itinerary</h2>
+    <div id="itineraryList"></div>
   </section>
 
   <!-- FLIGHTS -->
@@ -560,13 +619,6 @@
     <h2 class="section-title">🚌 Transit</h2>
     <button class="add-btn" onclick="openTransitForm()">+ Add bus / transit leg</button>
     <div id="transitList"></div>
-  </section>
-
-  <!-- ITINERARY -->
-  <section class="view" id="view-itinerary">
-    <h2 class="section-title">🗺️ Itinerary</h2>
-    <button class="add-btn" onclick="openDayForm()">+ Add day</button>
-    <div id="itineraryList"></div>
   </section>
 
   <!-- SETTINGS -->
@@ -596,7 +648,7 @@
 
     <div class="settings-block">
       <h4>Reset</h4>
-      <p>Clears every flight, hotel, transit leg, and itinerary day. Export a backup first if you might want this data again.</p>
+      <p>Clears every flight, hotel, and transit leg. Export a backup first if you might want this data again.</p>
       <div class="settings-row">
         <button class="danger" onclick="clearAllData()">Clear all data</button>
       </div>
@@ -612,10 +664,10 @@
 
 <script>
 /* ================= DATA ================= */
-const STORAGE_KEY = 'travelGuideData_v3';
+const STORAGE_KEY = 'travelGuideData_v4';
+const TRIP_START = "2026-09-15";
+const TRIP_END   = "2026-10-22";
 
-/* Your Europe overland trip — Montreal to Istanbul and back through the Balkans,
-   Adriatic coast, and Central Europe. Edit any of this from the app itself. */
 const defaultData = {
   tripName: "Eastern Europe 2026",
   tripSub: "Montreal → Istanbul → Warsaw · Sep 15 – Oct 22",
@@ -626,44 +678,44 @@ const defaultData = {
   ],
 
   hotels: [
-    { id:'h1',  name:"Basileus Hotel",          address:"Istanbul, Turkey",         checkIn:"2026-09-16", checkOut:"2026-09-17", confirmation:"", paid:"$77.91" },
-    { id:'h2',  name:"Meva Otel Konya",         address:"Konya, Turkey",            checkIn:"2026-09-19", checkOut:"2026-09-20", confirmation:"", paid:"$81.45" },
-    { id:'h3',  name:"Katapa Stone House",      address:"Göreme, Cappadocia, Turkey", checkIn:"2026-09-20", checkOut:"2026-09-22", confirmation:"", paid:"$188.52" },
-    { id:'h4',  name:"Duke Armeneasca Suites",  address:"Bucharest, Romania",       checkIn:"2026-09-24", checkOut:"2026-09-26", confirmation:"", paid:"$193.18 + $12.20 at property" },
-    { id:'h5',  name:"Best Western Terminus",   address:"Sofia, Bulgaria",          checkIn:"2026-09-27", checkOut:"2026-09-29", confirmation:"", paid:"$202.63 + $8.20 at property" },
-    { id:'h6',  name:"Apart Hotel Solaris",     address:"Skopje, North Macedonia",  checkIn:"2026-09-29", checkOut:"2026-10-01", confirmation:"", paid:"$114.48 + $4.23 at property" },
-    { id:'h7',  name:"Hotel Baron",             address:"Tirana, Albania",          checkIn:"2026-10-01", checkOut:"2026-10-06", confirmation:"", paid:"$324.42 + $24.38 at property" },
-    { id:'h8',  name:"Hotel Evropa",            address:"Podgorica, Montenegro",    checkIn:"2026-10-06", checkOut:"2026-10-07", confirmation:"", paid:"$129.75 + $3.21 at property" },
-    { id:'h9',  name:"D & Sons Apartments",     address:"Kotor, Montenegro",        checkIn:"2026-10-07", checkOut:"2026-10-08", confirmation:"", paid:"$125.47 + $3.21 at property" },
-    { id:'h10', name:"Guest House Bradas",      address:"Dubrovnik, Croatia",       checkIn:"2026-10-08", checkOut:"2026-10-10", confirmation:"", paid:"$190.08" },
-    { id:'h11', name:"Luxury Rooms Fetivi",     address:"Split, Croatia",           checkIn:"2026-10-10", checkOut:"2026-10-11", confirmation:"", paid:"$112.98 + $5.96 at property" },
-    { id:'h12', name:"HI Hostel Zagreb",        address:"Zagreb, Croatia",          checkIn:"2026-10-11", checkOut:"2026-10-14", confirmation:"", paid:"€171.45 — pay at property, nothing prepaid" },
-    { id:'h13', name:"Hostel Most",             address:"Ljubljana, Slovenia",      checkIn:"2026-10-14", checkOut:"2026-10-15", confirmation:"", paid:"$84.40 + $10.04 at property" },
-    { id:'h14', name:"Omega Guesthouse",        address:"Budapest, Hungary",        checkIn:"2026-10-16", checkOut:"2026-10-18", confirmation:"", paid:"$201.12 + $7.66 at property" },
-    { id:'h15', name:"Penzión Sport",           address:"Košice, Slovakia",         checkIn:"2026-10-18", checkOut:"2026-10-19", confirmation:"", paid:"$112.87 + $11.22 at property" },
-    { id:'h16', name:"Hotel Piast",             address:"Wrocław, Poland",          checkIn:"2026-10-19", checkOut:"2026-10-20", confirmation:"", paid:"$95.22" },
-    { id:'h17', name:"Level Rooms",             address:"Warsaw, Poland",           checkIn:"2026-10-20", checkOut:"2026-10-22", confirmation:"", paid:"$233.12" }
+    { id:'h1',  name:"Basileus Hotel",          address:"Küçük Ayasofya Mah., Şehit Mehmet Paşa Sok. No:1, Sultanahmet, Fatih, Istanbul 34122, Turkey", checkIn:"2026-09-16", checkOut:"2026-09-17", confirmation:"", paid:"$77.91" },
+    { id:'h2',  name:"Meva Otel Konya",         address:"Aziziye Mah., Mevlana Cad., Esarizade 1. Sokak No:2, Karatay, Konya 42030, Turkey", checkIn:"2026-09-19", checkOut:"2026-09-20", confirmation:"", paid:"$81.45" },
+    { id:'h3',  name:"Katapa Stone House",      address:"Isalı Gaferli Avcılar Mah., Ahmet Erol Sok. No:3, Göreme, Nevşehir 50180, Turkey", checkIn:"2026-09-20", checkOut:"2026-09-22", confirmation:"", paid:"$188.52" },
+    { id:'h4',  name:"Duke Armeneasca Suites",  address:"Str. Armand Călinescu nr. 19, Sector 2, 011691 Bucharest, Romania", checkIn:"2026-09-24", checkOut:"2026-09-26", confirmation:"", paid:"$193.18 + $12.20 at property" },
+    { id:'h5',  name:"Best Western Terminus",   address:"154 Hristo Botev Blvd, 1202 Sofia, Bulgaria — next to Sofia Central Railway & Bus Station", checkIn:"2026-09-27", checkOut:"2026-09-29", confirmation:"", paid:"$202.63 + $8.20 at property" },
+    { id:'h6',  name:"Apart Hotel Solaris",     address:"51 Titoveleška, 1000 Skopje, North Macedonia", checkIn:"2026-09-29", checkOut:"2026-10-01", confirmation:"", paid:"$114.48 + $4.23 at property" },
+    { id:'h7',  name:"Hotel Baron",             address:"Rruga Elbasanit 274, Sauk, 1003 Tirana, Albania", checkIn:"2026-10-01", checkOut:"2026-10-06", confirmation:"", paid:"$324.42 + $24.38 at property" },
+    { id:'h8',  name:"Hotel Evropa",            address:"Orahovačka 16, 81000 Podgorica, Montenegro — next to the main train & bus station", checkIn:"2026-10-06", checkOut:"2026-10-07", confirmation:"", paid:"$129.75 + $3.21 at property" },
+    { id:'h9',  name:"D & Sons Apartments",     address:"Stari Grad 490, Kotor Old Town, 85330 Kotor, Montenegro", checkIn:"2026-10-07", checkOut:"2026-10-08", confirmation:"", paid:"$125.47 + $3.21 at property" },
+    { id:'h10', name:"Guest House Bradas",      address:"Viška 6, 20000 Dubrovnik (Gruž), Croatia", checkIn:"2026-10-08", checkOut:"2026-10-10", confirmation:"", paid:"$190.08" },
+    { id:'h11', name:"Luxury Rooms Fetivi",     address:"Riječka ulica 3, 21000 Split, Croatia", checkIn:"2026-10-10", checkOut:"2026-10-11", confirmation:"", paid:"$112.98 + $5.96 at property" },
+    { id:'h12', name:"HI Hostel Zagreb",        address:"Petrinjska ulica 77, 10000 Zagreb, Croatia", checkIn:"2026-10-11", checkOut:"2026-10-14", confirmation:"", paid:"€171.45 — pay at property, nothing prepaid" },
+    { id:'h13', name:"Hostel Most",             address:"Petkovškovo nabrežje 41A, 1000 Ljubljana, Slovenia", checkIn:"2026-10-14", checkOut:"2026-10-15", confirmation:"", paid:"$84.40 + $10.04 at property" },
+    { id:'h14', name:"Omega Guesthouse",        address:"Rákóczi út 48-50, 1074 Budapest, Hungary", checkIn:"2026-10-16", checkOut:"2026-10-18", confirmation:"", paid:"$201.12 + $7.66 at property" },
+    { id:'h15', name:"Penzión Sport",           address:"Protifašistických Bojovníkov 9, 04001 Košice, Slovakia", checkIn:"2026-10-18", checkOut:"2026-10-19", confirmation:"", paid:"$112.87 + $11.22 at property" },
+    { id:'h16', name:"Hotel Piast",             address:"ul. Piłsudskiego 98, 50-017 Wrocław, Poland", checkIn:"2026-10-19", checkOut:"2026-10-20", confirmation:"", paid:"$95.22" },
+    { id:'h17', name:"Level Rooms",             address:"ul. Marszałkowska 87/42, 00-683 Warsaw, Poland", checkIn:"2026-10-20", checkOut:"2026-10-22", confirmation:"", paid:"$233.12" }
   ],
 
   transit: [
-    { id:'t1',  mode:"Overnight bus",     from:"Istanbul",   to:"Denizli",        date:"2026-09-17", detail:"Night of Sep 17" },
-    { id:'t2',  mode:"Overnight sleeper", from:"Denizli",    to:"Konya",          date:"2026-09-18", detail:"Night of Sep 18 · arrive Sep 19 AM" },
-    { id:'t3',  mode:"Daytime bus",       from:"Konya",      to:"Göreme",         date:"2026-09-20", detail:"~4 hrs" },
-    { id:'t4',  mode:"Overnight bus",     from:"Cappadocia", to:"Istanbul",       date:"2026-09-22", detail:"Night of Sep 22 · arrive Sep 23 AM" },
-    { id:'t5',  mode:"Overnight bus",     from:"Istanbul",   to:"Bucharest",      date:"2026-09-23", detail:"Night of Sep 23" },
-    { id:'t6',  mode:"Overnight bus",     from:"Bucharest",  to:"Sofia",          date:"2026-09-26", detail:"Night of Sep 26 · arrive Sep 27 AM" },
-    { id:'t7',  mode:"Daytime bus",       from:"Sofia",      to:"Skopje",         date:"2026-09-29", detail:"~5 hrs" },
-    { id:'t8',  mode:"Daytime bus",       from:"Skopje",     to:"Tirana",         date:"2026-10-01", detail:"" },
-    { id:'t9',  mode:"Daytime bus",       from:"Tirana",     to:"Podgorica",      date:"2026-10-06", detail:"" },
-    { id:'t10', mode:"Daytime bus",       from:"Podgorica",  to:"Kotor",          date:"2026-10-07", detail:"" },
-    { id:'t11', mode:"Daytime bus",       from:"Kotor",      to:"Dubrovnik",      date:"2026-10-08", detail:"" },
-    { id:'t12', mode:"Daytime bus",       from:"Dubrovnik",  to:"Split",          date:"2026-10-10", detail:"" },
-    { id:'t13', mode:"Daytime bus",       from:"Split",      to:"Zadar → Zagreb", date:"2026-10-11", detail:"Continue to Zagreb same day" },
-    { id:'t14', mode:"Daytime bus",       from:"Zagreb",     to:"Ljubljana",      date:"2026-10-14", detail:"" },
-    { id:'t15', mode:"Overnight bus",     from:"Ljubljana",  to:"Budapest",       date:"2026-10-15", detail:"Night of Oct 15 · arrive Oct 16 AM" },
-    { id:'t16', mode:"Daytime bus",       from:"Budapest",   to:"Košice",         date:"2026-10-18", detail:"" },
-    { id:'t17', mode:"Daytime bus",       from:"Košice",     to:"Wrocław",        date:"2026-10-19", detail:"" },
-    { id:'t18', mode:"Daytime bus",       from:"Wrocław",    to:"Warsaw",         date:"2026-10-20", detail:"" }
+    { id:'t1',  mode:"Overnight bus",     from:"Istanbul",   to:"Denizli",        date:"2026-09-17", detail:"Night of Sep 17", stationAddress:"Esenler Otogar (Istanbul International Bus Terminal), Bayrampaşa, Istanbul, Turkey" },
+    { id:'t2',  mode:"Overnight sleeper", from:"Denizli",    to:"Konya",          date:"2026-09-18", detail:"Night of Sep 18 · arrive Sep 19 AM", stationAddress:"Denizli Otogar (Bağbaşı), Denizli, Turkey" },
+    { id:'t3',  mode:"Daytime bus",       from:"Konya",      to:"Göreme",         date:"2026-09-20", detail:"~4 hrs", stationAddress:"Konya Otogar, Selçuklu, Konya, Turkey" },
+    { id:'t4',  mode:"Overnight bus",     from:"Cappadocia", to:"Istanbul",       date:"2026-09-22", detail:"Night of Sep 22 · arrive Sep 23 AM", stationAddress:"Nevşehir Otogarı, Nevşehir, Turkey" },
+    { id:'t5',  mode:"Overnight bus",     from:"Istanbul",   to:"Bucharest",      date:"2026-09-23", detail:"Night of Sep 23", stationAddress:"Esenler Otogar (Istanbul International Bus Terminal), Bayrampaşa, Istanbul, Turkey" },
+    { id:'t6',  mode:"Overnight bus",     from:"Bucharest",  to:"Sofia",          date:"2026-09-26", detail:"Night of Sep 26 · arrive Sep 27 AM", stationAddress:"Bucharest coach terminal — confirm the exact pickup point with your bus operator" },
+    { id:'t7',  mode:"Daytime bus",       from:"Sofia",      to:"Skopje",         date:"2026-09-29", detail:"~5 hrs", stationAddress:"Sofia Central Bus Station, Knyaginya Maria Luiza Blvd 100, Sofia, Bulgaria" },
+    { id:'t8',  mode:"Daytime bus",       from:"Skopje",     to:"Tirana",         date:"2026-10-01", detail:"", stationAddress:"Skopje Bus Station (Avtobuska Stanica), near Nikola Karev St, Skopje, North Macedonia" },
+    { id:'t9',  mode:"Daytime bus",       from:"Tirana",     to:"Podgorica",      date:"2026-10-06", detail:"", stationAddress:"Tirana — intercity coaches depart from various points; confirm pickup with your operator" },
+    { id:'t10', mode:"Daytime bus",       from:"Podgorica",  to:"Kotor",          date:"2026-10-07", detail:"", stationAddress:"Podgorica Bus & Train Station, next to Hotel Evropa, Podgorica, Montenegro" },
+    { id:'t11', mode:"Daytime bus",       from:"Kotor",      to:"Dubrovnik",      date:"2026-10-08", detail:"", stationAddress:"Kotor bus stop, just outside the Old Town walls on the main coastal road" },
+    { id:'t12', mode:"Daytime bus",       from:"Dubrovnik",  to:"Split",          date:"2026-10-10", detail:"", stationAddress:"Dubrovnik Bus Station, Ante Starčevića 24, Dubrovnik, Croatia" },
+    { id:'t13', mode:"Daytime bus",       from:"Split",      to:"Zadar → Zagreb", date:"2026-10-11", detail:"Continue to Zagreb same day", stationAddress:"Split Bus Station, Obala Kneza Domagoja 12, Split, Croatia" },
+    { id:'t14', mode:"Daytime bus",       from:"Zagreb",     to:"Ljubljana",      date:"2026-10-14", detail:"", stationAddress:"Zagreb Bus Terminal (Autobusni kolodvor), Avenija Marina Držića 4, Zagreb, Croatia" },
+    { id:'t15', mode:"Overnight bus",     from:"Ljubljana",  to:"Budapest",       date:"2026-10-15", detail:"Night of Oct 15 · arrive Oct 16 AM", stationAddress:"Ljubljana Bus Station, Trg Osvobodilne fronte 4, Ljubljana, Slovenia" },
+    { id:'t16', mode:"Daytime bus",       from:"Budapest",   to:"Košice",         date:"2026-10-18", detail:"", stationAddress:"Népliget Bus Station, Üllői út 131, Budapest, Hungary" },
+    { id:'t17', mode:"Daytime bus",       from:"Košice",     to:"Wrocław",        date:"2026-10-19", detail:"", stationAddress:"Košice Bus Station, Staničné námestie 9, Košice, Slovakia" },
+    { id:'t18', mode:"Daytime bus",       from:"Wrocław",    to:"Warsaw",         date:"2026-10-20", detail:"", stationAddress:"Wrocław Bus Station (Dworzec Autobusowy), ul. Sucha 1B, Wrocław, Poland" }
   ],
 
   days: [
@@ -971,17 +1023,18 @@ function fmtDate(iso){
   const d = new Date(iso + 'T00:00:00');
   return d.toLocaleDateString(undefined, { weekday:'short', month:'short', day:'numeric' });
 }
-function daysBetween(iso){
-  const now = new Date();
-  const target = new Date(iso + 'T00:00:00');
-  const ms = target - new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  return Math.round(ms / 86400000);
+function fmtDateLong(iso){
+  if(!iso) return '';
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString(undefined, { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+}
+function addDays(iso, n){
+  const d = new Date(iso + 'T00:00:00');
+  d.setDate(d.getDate() + n);
+  return d.toISOString().slice(0,10);
 }
 function uid(){ return 'id' + Math.random().toString(36).slice(2,9); }
-function nominalTime(mode){
-  if(!mode) return '12:00';
-  return /overnight/i.test(mode) ? '21:00' : '09:00';
-}
+function val(id){ return document.getElementById(id).value.trim(); }
 
 /* ================= TABS ================= */
 document.querySelectorAll('.tab-btn').forEach(btn=>{
@@ -997,84 +1050,159 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   });
 });
 
-/* ================= RENDER: HEADER ================= */
+/* ================= HEADER ================= */
 function renderHeader(){
   document.getElementById('tripTitleDisplay').textContent = data.tripName || 'My Trip';
   document.getElementById('tripSubDisplay').textContent = data.tripSub || 'Tap Settings to name your trip';
 }
 
-/* ================= RENDER: TODAY BOARD ================= */
-function renderToday(){
-  const board = document.getElementById('board');
-  const now = new Date();
-  const dateStr = now.toLocaleDateString(undefined, { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+/* ================= DATE SCROLLER + SIMULATOR ================= */
+let selectedDate = (function(){
+  const t = todayISO();
+  if(t < TRIP_START) return TRIP_START;
+  if(t > TRIP_END) return TRIP_END;
+  return t;
+})();
 
-  const events = [];
-  data.flights.forEach(f=>{
-    events.push({ date:f.date, sortTime:f.depart||'12:00', title:`✈️ Flight ${cityFlag(f.from)}${f.from} → ${cityFlag(f.to)}${f.to}`, meta:`Departs ${f.depart || '—'}${f.airline ? ' · ' + f.airline : ''}` });
-  });
-  data.hotels.forEach(h=>{
-    events.push({ date:h.checkIn,  sortTime:'15:00', title:`🛎️ Check in — ${cityFlag(h.address)} ${h.name}`,  meta:h.address });
-    events.push({ date:h.checkOut, sortTime:'11:00', title:`🧳 Check out — ${cityFlag(h.address)} ${h.name}`, meta:h.address });
-  });
-  data.transit.forEach(t=>{
-    const icon = /overnight/i.test(t.mode) ? '🌙' : '🚌';
-    events.push({ date:t.date, sortTime:nominalTime(t.mode), title:`${icon} ${t.mode} — ${cityFlag(t.from)}${t.from} → ${cityFlag(t.to)}${t.to}`, meta:t.detail || 'Transit day' });
-  });
+function buildDateScroller(){
+  const wrap = document.getElementById('dateScroller');
+  let html = '';
+  let d = TRIP_START;
+  while(d <= TRIP_END){
+    const dow = new Date(d+'T00:00:00').toLocaleDateString(undefined,{weekday:'short'});
+    const dnum = new Date(d+'T00:00:00').getDate();
+    const isToday = d === todayISO();
+    html += `<button class="date-chip${d===selectedDate?' active':''}${isToday?' is-today':''}" data-date="${d}" onclick="selectDate('${d}')">
+      <span class="dow">${dow}</span><span class="dnum">${dnum}</span>
+    </button>`;
+    d = addDays(d, 1);
+  }
+  wrap.innerHTML = html;
+  const activeChip = wrap.querySelector('.date-chip.active');
+  if(activeChip) activeChip.scrollIntoView({inline:'center', block:'nearest'});
+}
+function selectDate(d){
+  selectedDate = d;
+  buildDateScroller();
+  renderSimBoxes();
+}
+function stepDate(delta){
+  const next = addDays(selectedDate, delta);
+  if(next < TRIP_START || next > TRIP_END) return;
+  selectDate(next);
+}
 
-  const todayStr = todayISO();
-  const upcoming = events
-    .filter(e=> e.date >= todayStr)
-    .sort((a,b)=> (a.date+a.sortTime).localeCompare(b.date+b.sortTime));
+function lodgingForDate(d){
+  const hotel = data.hotels.find(h=> h.checkIn <= d && d < h.checkOut);
+  if(hotel) return { type:'hotel', data:hotel };
+  const overnight = data.transit.find(t=> t.date === d && /overnight/i.test(t.mode));
+  if(overnight) return { type:'bus', data:overnight };
+  return null;
+}
+function daytimeBusForDate(d){
+  return data.transit.find(t=> t.date === d && !/overnight/i.test(t.mode));
+}
 
-  const next = upcoming[0];
+function renderSimBoxes(){
+  document.getElementById('selectedDateLabel').textContent = fmtDateLong(selectedDate);
+  const container = document.getElementById('simBoxes');
+  let html = '';
 
-  let html = `<div class="board-date">${dateStr}</div>`;
+  // Itinerary box (purple)
+  const day = data.days.find(dd=> dd.date === selectedDate);
+  html += `<div class="sim-box purple">
+    <div class="sim-box-label">🗺️ Itinerary</div>`;
+  if(day && day.items.length){
+    html += `<div class="sim-box-title">${cityFlag(day.title)} ${day.title}</div>
+      <ul class="sim-items">
+        ${day.items.map(it=>`
+          <li class="sim-item">
+            <div class="time">${it.time || '—'}</div>
+            <div>
+              <div>${activityEmoji(it.activity)} ${it.activity}</div>
+              ${it.note ? `<div class="note">${it.note}</div>` : ''}
+            </div>
+          </li>
+        `).join('')}
+      </ul>`;
+  } else {
+    html += `<div class="sim-box-empty-text">No planned activities for this day.</div>`;
+  }
+  html += `</div>`;
 
-  if(next){
-    const diff = daysBetween(next.date);
-    let whenLabel;
-    if(diff === 0) whenLabel = 'Today';
-    else if(diff === 1) whenLabel = 'Tomorrow';
-    else if(diff > 1) whenLabel = `In ${diff} days`;
-    else whenLabel = fmtDate(next.date);
+  // Bus box (orange) — daytime transit only
+  const bus = daytimeBusForDate(selectedDate);
+  if(bus){
+    html += `<div class="sim-box orange">
+      <div class="sim-box-label">🚌 Bus Today</div>
+      <div class="sim-box-title">${cityFlag(bus.from)} ${bus.from} → ${cityFlag(bus.to)} ${bus.to}</div>
+      <div class="sim-box-addr">${bus.mode}${bus.detail ? ' · ' + bus.detail : ''}</div>
+      <div class="sim-box-note">📍 Departs from: ${bus.stationAddress || 'confirm with operator'}</div>
+    </div>`;
+  }
 
-    html += `
-      <div class="board-next-label">Next up · ${whenLabel}</div>
-      <div class="board-next-title">${next.title}</div>
-      <div class="board-next-meta">
-        <div class="board-metric"><div class="num">${fmtDate(next.date)}</div><div class="lbl">DATE</div></div>
-        <div class="board-metric"><div class="num">${next.sortTime}</div><div class="lbl">TIME</div></div>
+  // Lodging box — Hotel (green) or Overnight Bus (orange)
+  const lodging = lodgingForDate(selectedDate);
+  if(lodging && lodging.type === 'hotel'){
+    const h = lodging.data;
+    html += `<div class="sim-box green">
+      <div class="sim-box-label">🏨 Tonight's Hotel</div>
+      <div class="sim-box-title">${cityFlag(h.address)} ${h.name}</div>
+      <div class="sim-box-addr">📍 ${h.address}</div>
+      <div class="sim-box-meta">
+        <div><div class="num">${fmtDate(h.checkIn)}</div><div class="lbl">Check in</div></div>
+        <div><div class="num">${fmtDate(h.checkOut)}</div><div class="lbl">Check out</div></div>
       </div>
-      <div style="margin-top:11px; color:#C7CBEF; font-size:14.5px; font-weight:700;">${next.meta || ''}</div>
-    `;
+      <div class="sim-box-note">💳 ${h.paid || 'No price on file'}</div>
+    </div>`;
+  } else if(lodging && lodging.type === 'bus'){
+    const t = lodging.data;
+    html += `<div class="sim-box orange">
+      <div class="sim-box-label">🌙 Tonight: Overnight Bus</div>
+      <div class="sim-box-title">${cityFlag(t.from)} ${t.from} → ${cityFlag(t.to)} ${t.to}</div>
+      <div class="sim-box-addr">${t.mode}${t.detail ? ' · ' + t.detail : ''}</div>
+      <div class="sim-box-note">📍 Departs from: ${t.stationAddress || 'confirm with operator'}</div>
+    </div>`;
   } else {
-    html += `<div class="board-empty">No upcoming flights, hotels, or transit legs — check the other tabs.</div>`;
+    html += `<div class="sim-box empty">
+      <div class="sim-box-label">🏨 Tonight</div>
+      <div class="sim-box-empty-text">No hotel booked for this night.</div>
+    </div>`;
   }
 
-  const todaysDay = data.days.find(d=> d.date === todayStr);
-  if(todaysDay && todaysDay.items.length){
-    html += `<div class="board-today-list"><h4>Today's plan — ${cityFlag(todaysDay.title)} ${todaysDay.title}</h4>`;
-    todaysDay.items.forEach(it=>{
-      html += `<div class="board-row"><div class="time">${it.time || '—'}</div><div>${activityEmoji(it.activity)} ${it.activity}</div></div>`;
-    });
-    html += `</div>`;
-  }
+  container.innerHTML = html;
+}
 
-  board.innerHTML = html;
-
-  const container = document.getElementById('todayItinerary');
-  if(!todaysDay){
-    const futureDays = data.days.filter(d=> d.date > todayStr).sort((a,b)=> a.date.localeCompare(b.date));
-    if(futureDays.length){
-      container.innerHTML = `<h2 class="section-title">📅 Coming up</h2>` +
-        futureDays.slice(0,2).map(d=> dayCardHTML(d, false)).join('');
-    } else {
-      container.innerHTML = '';
-    }
-  } else {
-    container.innerHTML = '';
+/* ================= RENDER: ITINERARY (read-only) ================= */
+function dayCardHTML(d){
+  const isToday = d.date === todayISO();
+  const items = (d.items||[]).slice().sort((a,b)=> (a.time||'').localeCompare(b.time||''));
+  return `
+    <div class="day-card">
+      <div class="day-date">${fmtDate(d.date)}</div>
+      <div class="day-title">${cityFlag(d.title)} ${d.title}${isToday ? '<span class="today-badge">Today</span>' : ''}</div>
+      <ul class="day-items">
+        ${items.map(it=>`
+          <li class="day-item">
+            <div class="time">${it.time || '—'}</div>
+            <div>
+              <div>${activityEmoji(it.activity)} ${it.activity}</div>
+              ${it.note ? `<div class="note">${it.note}</div>` : ''}
+            </div>
+          </li>
+        `).join('') || '<li class="day-item"><div class="note">No activities added yet.</div></li>'}
+      </ul>
+    </div>
+  `;
+}
+function renderItinerary(){
+  const list = document.getElementById('itineraryList');
+  if(!data.days.length){
+    list.innerHTML = `<div class="empty">No itinerary days yet.</div>`;
+    return;
   }
+  const sorted = [...data.days].sort((a,b)=> a.date.localeCompare(b.date));
+  list.innerHTML = sorted.map(d=> dayCardHTML(d)).join('');
 }
 
 /* ================= RENDER: FLIGHTS ================= */
@@ -1124,7 +1252,7 @@ function renderHotels(){
     <div class="ticket hotel-ticket">
       <div class="ticket-main">
         <div class="hotel-name">${cityFlag(h.address)} ${h.name}</div>
-        <div class="hotel-addr">${h.address || ''}</div>
+        <div class="hotel-addr">📍 ${h.address || ''}</div>
         <div class="hotel-stay">
           <div class="ticket-time"><div class="num">${fmtDate(h.checkIn)}</div><div class="lbl">Check in</div></div>
           <div class="ticket-time"><div class="num">${fmtDate(h.checkOut)}</div><div class="lbl">Check out</div></div>
@@ -1159,64 +1287,25 @@ function renderTransit(){
         <div class="transit-mode">${t.mode} · ${fmtDate(t.date)}</div>
         <div class="transit-route">${cityFlag(t.from)} ${t.from} → ${cityFlag(t.to)} ${t.to}</div>
         ${t.detail ? `<div class="transit-meta">${t.detail}</div>` : ''}
-      </div>
-      <div class="card-actions">
-        <button onclick="openTransitForm('${t.id}')">Edit</button>
-        <button onclick="deleteItem('transit','${t.id}')">Delete</button>
+        <div class="transit-station">📍 Departs from: ${t.stationAddress || 'confirm with operator'}</div>
+        <div class="card-actions" style="padding:10px 0 0;">
+          <button onclick="openTransitForm('${t.id}')">Edit</button>
+          <button onclick="deleteItem('transit','${t.id}')">Delete</button>
+        </div>
       </div>
     </div>
   `).join('');
 }
 
-/* ================= RENDER: ITINERARY ================= */
-function dayCardHTML(d, showActions=true){
-  const isToday = d.date === todayISO();
-  const items = (d.items||[]).slice().sort((a,b)=> (a.time||'').localeCompare(b.time||''));
-  return `
-    <div class="day-card">
-      <div class="day-head">
-        <div>
-          <div class="day-date">${fmtDate(d.date)}</div>
-          <div class="day-title">${cityFlag(d.title)} ${d.title}${isToday ? '<span class="today-badge">Today</span>' : ''}</div>
-        </div>
-      </div>
-      <ul class="day-items">
-        ${items.map(it=>`
-          <li class="day-item">
-            <div class="time">${it.time || '—'}</div>
-            <div>
-              <div>${activityEmoji(it.activity)} ${it.activity}</div>
-              ${it.note ? `<div class="note">${it.note}</div>` : ''}
-            </div>
-          </li>
-        `).join('') || '<li class="day-item"><div class="note">No activities added yet.</div></li>'}
-      </ul>
-      ${showActions ? `
-        <div class="day-actions">
-          <button onclick="openDayForm('${d.id}')" style="background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;margin-right:14px;font-weight:700;">Edit</button>
-          <button onclick="deleteItem('days','${d.id}')" style="background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;font-weight:700;">Delete</button>
-        </div>` : ''}
-    </div>
-  `;
-}
-function renderItinerary(){
-  const list = document.getElementById('itineraryList');
-  if(!data.days.length){
-    list.innerHTML = `<div class="empty">No days planned yet. Add your first day above.</div>`;
-    return;
-  }
-  const sorted = [...data.days].sort((a,b)=> a.date.localeCompare(b.date));
-  list.innerHTML = sorted.map(d=> dayCardHTML(d, true)).join('');
-}
-
 /* ================= RENDER ALL ================= */
 function renderAll(){
   renderHeader();
-  renderToday();
+  buildDateScroller();
+  renderSimBoxes();
+  renderItinerary();
   renderFlights();
   renderHotels();
   renderTransit();
-  renderItinerary();
 }
 
 /* ================= DELETE ================= */
@@ -1287,7 +1376,7 @@ function openHotelForm(id){
   sheet.innerHTML = `
     <h3>${existing ? 'Edit hotel' : 'Add hotel'}</h3>
     <div class="field"><label>Hotel name</label><input id="h_name" value="${existing?.name||''}" placeholder="Hotel Granvia Kyoto"></div>
-    <div class="field"><label>Address</label><input id="h_addr" value="${existing?.address||''}" placeholder="City, Country"></div>
+    <div class="field"><label>Address</label><input id="h_addr" value="${existing?.address||''}" placeholder="Full street address, city, country"></div>
     <div class="field-row">
       <div class="field"><label>Check-in date</label><input type="date" id="h_in" value="${existing?.checkIn||''}"></div>
       <div class="field"><label>Check-out date</label><input type="date" id="h_out" value="${existing?.checkOut||''}"></div>
@@ -1340,6 +1429,7 @@ function openTransitForm(id){
       <div class="field"><label>To</label><input id="t_to" value="${existing?.to||''}" placeholder="Denizli"></div>
     </div>
     <div class="field"><label>Departure date</label><input type="date" id="t_date" value="${existing?.date||''}"></div>
+    <div class="field"><label>Departure station / stop address</label><input id="t_station" value="${existing?.stationAddress||''}" placeholder="Esenler Otogar, Bayrampaşa, Istanbul"></div>
     <div class="field"><label>Notes</label><input id="t_detail" value="${existing?.detail||''}" placeholder="Night of Sep 17 · ~4 hrs"></div>
     <div class="sheet-actions">
       <button class="btn-cancel" onclick="closeModal()">Cancel</button>
@@ -1351,10 +1441,11 @@ function openTransitForm(id){
 function saveTransit(id){
   const obj = {
     id: id || uid(),
-    mode: val('t_mode') || document.getElementById('t_mode').value,
+    mode: document.getElementById('t_mode').value,
     from: val('t_from'),
     to: val('t_to'),
     date: val('t_date'),
+    stationAddress: val('t_station'),
     detail: val('t_detail')
   };
   if(!obj.from || !obj.to || !obj.date){ alert('Please fill in From, To, and Date.'); return; }
@@ -1367,72 +1458,12 @@ function saveTransit(id){
   saveData(); closeModal(); renderAll();
 }
 
-/* ---- Day form ---- */
-let editingDayItems = [];
-function openDayForm(id){
-  const existing = id ? data.days.find(d=>d.id===id) : null;
-  editingDayItems = existing ? JSON.parse(JSON.stringify(existing.items||[])) : [];
-  sheet.innerHTML = `
-    <h3>${existing ? 'Edit day' : 'Add day'}</h3>
-    <div class="field"><label>Date</label><input type="date" id="d_date" value="${existing?.date||''}"></div>
-    <div class="field"><label>Day title</label><input id="d_title" value="${existing?.title||''}" placeholder="Shinjuku & Shibuya"></div>
-    <div class="day-items-editor">
-      <label style="display:block;font-size:12.5px;color:var(--muted);margin-bottom:8px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;">Activities</label>
-      <div id="itemRows"></div>
-      <button type="button" class="add-item-btn" onclick="addItemRow()">+ Add activity</button>
-    </div>
-    <div class="sheet-actions">
-      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      <button class="btn-save" onclick="saveDay('${existing?.id||''}')">${existing?'Save changes':'Add day'}</button>
-    </div>
-  `;
-  renderItemRows();
-  overlay.classList.add('active');
-}
-function renderItemRows(){
-  const wrap = document.getElementById('itemRows');
-  wrap.innerHTML = editingDayItems.map((it,i)=>`
-    <div class="item-row">
-      <input class="time-input" type="time" value="${it.time||''}" onchange="editingDayItems[${i}].time=this.value">
-      <input placeholder="Activity" value="${it.activity||''}" onchange="editingDayItems[${i}].activity=this.value">
-      <button type="button" class="rm" onclick="removeItemRow(${i})">×</button>
-    </div>
-  `).join('');
-}
-function addItemRow(){
-  editingDayItems.push({ time:'', activity:'', note:'' });
-  renderItemRows();
-}
-function removeItemRow(i){
-  editingDayItems.splice(i,1);
-  renderItemRows();
-}
-function saveDay(id){
-  const obj = {
-    id: id || uid(),
-    date: val('d_date'),
-    title: val('d_title'),
-    items: editingDayItems.filter(it=> it.activity && it.activity.trim())
-  };
-  if(!obj.date || !obj.title){ alert('Please fill in date and title.'); return; }
-  if(id){
-    const idx = data.days.findIndex(d=>d.id===id);
-    data.days[idx] = obj;
-  } else {
-    data.days.push(obj);
-  }
-  saveData(); closeModal(); renderAll();
-}
-
-function val(id){ return document.getElementById(id).value.trim(); }
-
 /* ================= SETTINGS ================= */
 function saveTripInfo(){
   data.tripName = document.getElementById('settingsTripName').value.trim();
   data.tripSub = document.getElementById('settingsTripSub').value.trim();
   saveData();
   renderHeader();
-  renderToday();
 }
 function exportData(){
   const blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
